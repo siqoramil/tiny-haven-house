@@ -1,0 +1,173 @@
+{
+  "nav": {
+    "home": "Bosh sahifa",
+    "houses": "Uylar",
+    "about": "Biz haqimizda",
+    "contact": "Aloqa",
+    "findHome": "Uy topish"
+  },
+  "header": {
+    "search": "Qidirish",
+    "cart": "Savat",
+    "favorites": "Sevimlilar",
+    "language": "Til"
+  },
+  "cart": {
+    "title": "Savat",
+    "empty": "Savat bo'sh",
+    "total": "Jami",
+    "checkout": "Buyurtma berish",
+    "remove": "O'chirish",
+    "clear": "Savatni tozalash",
+    "addedToCart": "Savatga qo'shildi",
+    "items": "ta mahsulot"
+  },
+  "favorites": {
+    "title": "Sevimlilar",
+    "empty": "Sevimlilar yo'q",
+    "addedToFavorites": "Sevimlilarga qo'shildi",
+    "removedFromFavorites": "Sevimlilardan o'chirildi"
+  },
+  "houses": {
+    "title": "O'z kichik uyingizni toping",
+    "subtitle": "Mamlakat bo'ylab chiroyli kichik uylar kolleksiyamizni ko'ring.",
+    "found": "ta uy topildi",
+    "perNight": "bir kecha",
+    "viewDetails": "Batafsil",
+    "addToCart": "Savatga qo'shish",
+    "available": "Mavjud",
+    "sold": "Sotilgan",
+    "featured": "Tavsiya etilgan",
+    "filters": {
+      "allTypes": "Barcha turlar",
+      "anyPrice": "Istalgan narx",
+      "bedrooms": "Yotoq xonalar",
+      "allLocations": "Barcha joylar",
+      "moreFilters": "Ko'proq filtrlar",
+      "clearAll": "Tozalash",
+      "search": "Nom, joy yoki xususiyatlar bo'yicha qidirish...",
+      "size": "Maydon (kv.m)",
+      "customPrice": "Boshqa narx",
+      "sortBy": "Saralash",
+      "newestFirst": "Avval yangilari",
+      "priceLowHigh": "Narx: pastdan yuqoriga",
+      "priceHighLow": "Narx: yuqoridan pastga"
+    },
+    "types": {
+      "cabin": "Yog'och uy",
+      "container": "Konteyner",
+      "modular": "Modulli",
+      "traditional": "An'anaviy",
+      "aFrame": "A-shakl"
+    },
+    "bedrooms": {
+      "any": "Istalgan",
+      "onePlus": "1+",
+      "twoPlus": "2+",
+      "threePlus": "3+"
+    }
+  },
+  "theme": {
+    "light": "Yorug'",
+    "dark": "Qorong'u",
+    "system": "Tizim",
+    "title": "Mavzu",
+    "lightDesc": "Doim yorug' rejim",
+    "darkDesc": "Doim qorong'u rejim",
+    "systemDesc": "Tizim sozlamalariga mos"
+  },
+  "contact": {
+    "title": "Biz bilan bog'laning",
+    "subtitle": "Orzu qilgan uyingizni topishga tayyormisiz yoki shunchaki variantlarni o'rganayapsizmi, jamoamiz yordam berishga tayyor.",
+    "getInTouch": "Bog'lanish",
+    "sendMessage": "Xabar yuborish",
+    "formSubtitle": "Quyidagi shaklni to'ldiring va biz 24 soat ichida javob beramiz.",
+    "quickActions": "Tezkor harakatlar",
+    "scheduleViewing": "Ko'rishni rejalashtirish",
+    "scheduleDesc": "Istalgan uy bo'yicha shaxsiy yoki virtual sayohatni bron qiling.",
+    "bookNow": "Bron qilish",
+    "liveChat": "Jonli chat",
+    "liveChatDesc": "Tezkor yordam uchun jamoamiz bilan suhbatlashing.",
+    "startChat": "Chatni boshlash",
+    "ourLocation": "Bizning manzil",
+    "faq": "Ko'p so'raladigan savollar",
+    "faqSubtitle": "Tez-tez beriladigan savollarga javoblar. Javob topa olmadingizmi? To'g'ridan-to'g'ri bog'laning.",
+    "phone": "Telefon",
+    "email": "Email",
+    "office": "Ofis",
+    "hours": "Ish vaqti",
+    "callNow": "Qo'ng'iroq qilish",
+    "sendEmail": "Email yuborish",
+    "getDirections": "Yo'nalish",
+    "preferPhone": "Telefon orqali gaplashishni afzal ko'rasizmi?",
+    "phoneSubtitle": "Bizning samimiy jamoamiz dushanba-shanba kunlari savollaringizga javob berish va ideal uyingizni topishda yordam berish uchun tayyor."
+  },
+  "about": {
+    "title": "TinyHaven haqida",
+    "subtitle": "Bizning maqsadimiz - kichik uylarda yashashni hamma uchun qulay, chiroyli va ekologik qilish.",
+    "ourStory": "Bizning tarix",
+    "ourMission": "Bizning missiya",
+    "ourValues": "Bizning qadriyatlar",
+    "meetTeam": "Bizning jamoa"
+  },
+  "home": {
+    "hero": {
+      "title": "Mukammal kichik uyingizni toping",
+      "subtitle": "Qulaylik, ekologiklik va uslubni birlashtirgan chiroyli loyihalashtirilgan kichik uylarni kashf eting. Oddiy hayotga bo'lgan orzuingiz shu yerdan boshlanadi.",
+      "browseHomes": "Uylarni ko'rish",
+      "learnMore": "Batafsil"
+    },
+    "featured": {
+      "title": "Tanlangan uylar",
+      "subtitle": "Ajoyib kichik uylar tanlovimizni o'rganing"
+    },
+    "whyUs": {
+      "title": "Nega TinyHaven?",
+      "subtitle": "Biz sizga mukammal kichik uyni topishda yordam berishga intilamiz"
+    },
+    "cta": {
+      "title": "Orzu qilgan uyingizni topishga tayyormisiz?",
+      "subtitle": "Chiroyli kichik uylar kolleksiyamizni ko'ring va oddiy hayotga sayohatingizni boshlang.",
+      "button": "Barcha uylarni ko'rish"
+    }
+  },
+  "footer": {
+    "description": "Mukammal kichik uyingizni toping. Biz orzumandlarni mamlakat bo'ylab chiroyli, ekologik kichik uylar bilan bog'laymiz.",
+    "quickLinks": "Tezkor havolalar",
+    "support": "Qo'llab-quvvatlash",
+    "helpCenter": "Yordam markazi",
+    "faqs": "Savollar va javoblar",
+    "contactUs": "Bog'lanish",
+    "privacyPolicy": "Maxfiylik siyosati",
+    "termsOfService": "Foydalanish shartlari",
+    "newsletter": "Yangiliklar",
+    "newsletterDesc": "Eng so'nggi kichik uy e'lonlari va maslahatlar uchun obuna bo'ling.",
+    "subscribe": "Obuna bo'lish",
+    "emailPlaceholder": "Emailingizni kiriting",
+    "allRightsReserved": "Barcha huquqlar himoyalangan."
+  },
+  "common": {
+    "loading": "Yuklanmoqda...",
+    "error": "Xatolik yuz berdi",
+    "close": "Yopish",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "submit": "Yuborish",
+    "back": "Orqaga",
+    "next": "Keyingi",
+    "viewAll": "Hammasini ko'rish",
+    "readMore": "Batafsil o'qish",
+    "learnMore": "Batafsil"
+  },
+  "form": {
+    "firstName": "Ism",
+    "lastName": "Familiya",
+    "email": "Email",
+    "phone": "Telefon",
+    "message": "Xabar",
+    "subject": "Mavzu",
+    "send": "Yuborish",
+    "required": "Majburiy",
+    "optional": "Ixtiyoriy"
+  }
+}

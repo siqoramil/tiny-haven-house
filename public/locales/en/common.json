@@ -1,0 +1,173 @@
+{
+  "nav": {
+    "home": "Home",
+    "houses": "Houses",
+    "about": "About",
+    "contact": "Contact",
+    "findHome": "Find Your Home"
+  },
+  "header": {
+    "search": "Search",
+    "cart": "Cart",
+    "favorites": "Favorites",
+    "language": "Language"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "total": "Total",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "clear": "Clear Cart",
+    "addedToCart": "Added to cart",
+    "items": "items"
+  },
+  "favorites": {
+    "title": "Favorites",
+    "empty": "No favorites yet",
+    "addedToFavorites": "Added to favorites",
+    "removedFromFavorites": "Removed from favorites"
+  },
+  "houses": {
+    "title": "Find Your Tiny House",
+    "subtitle": "Browse our collection of beautiful tiny homes across the country.",
+    "found": "homes found",
+    "perNight": "per night",
+    "viewDetails": "View Details",
+    "addToCart": "Add to Cart",
+    "available": "Available",
+    "sold": "Sold",
+    "featured": "Featured",
+    "filters": {
+      "allTypes": "All Types",
+      "anyPrice": "Any Price",
+      "bedrooms": "Bedrooms",
+      "allLocations": "All Locations",
+      "moreFilters": "More Filters",
+      "clearAll": "Clear All",
+      "search": "Search by name, location, or features...",
+      "size": "Size (sq ft)",
+      "customPrice": "Custom Price Range",
+      "sortBy": "Sort by",
+      "newestFirst": "Newest First",
+      "priceLowHigh": "Price: Low to High",
+      "priceHighLow": "Price: High to Low"
+    },
+    "types": {
+      "cabin": "Cabin",
+      "container": "Container",
+      "modular": "Modular",
+      "traditional": "Traditional",
+      "aFrame": "A-Frame"
+    },
+    "bedrooms": {
+      "any": "Any",
+      "onePlus": "1+",
+      "twoPlus": "2+",
+      "threePlus": "3+"
+    }
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "title": "Theme",
+    "lightDesc": "Always light mode",
+    "darkDesc": "Always dark mode",
+    "systemDesc": "Follow system settings"
+  },
+  "contact": {
+    "title": "We'd Love to Hear From You",
+    "subtitle": "Whether you're ready to find your dream tiny home or just exploring options, our team is here to help. Reach out anytime.",
+    "getInTouch": "Get in Touch",
+    "sendMessage": "Send Us a Message",
+    "formSubtitle": "Fill out the form below and we'll get back to you within 24 hours.",
+    "quickActions": "Quick Actions",
+    "scheduleViewing": "Schedule a Viewing",
+    "scheduleDesc": "Book an in-person or virtual tour of any home.",
+    "bookNow": "Book Now",
+    "liveChat": "Live Chat",
+    "liveChatDesc": "Chat with our team for immediate assistance.",
+    "startChat": "Start Chat",
+    "ourLocation": "Our Location",
+    "faq": "Frequently Asked Questions",
+    "faqSubtitle": "Quick answers to common questions. Can't find what you're looking for? Contact us directly.",
+    "phone": "Phone",
+    "email": "Email",
+    "office": "Office",
+    "hours": "Hours",
+    "callNow": "Call Now",
+    "sendEmail": "Send Email",
+    "getDirections": "Get Directions",
+    "preferPhone": "Prefer to Talk on the Phone?",
+    "phoneSubtitle": "Our friendly team is available Monday through Saturday to answer your questions and help you find your perfect tiny home."
+  },
+  "about": {
+    "title": "About TinyHaven",
+    "subtitle": "We're on a mission to make tiny living accessible, beautiful, and sustainable for everyone.",
+    "ourStory": "Our Story",
+    "ourMission": "Our Mission",
+    "ourValues": "Our Values",
+    "meetTeam": "Meet Our Team"
+  },
+  "home": {
+    "hero": {
+      "title": "Find Your Perfect Tiny Home",
+      "subtitle": "Discover beautifully designed tiny houses that combine comfort, sustainability, and style. Your dream of simple living starts here.",
+      "browseHomes": "Browse Homes",
+      "learnMore": "Learn More"
+    },
+    "featured": {
+      "title": "Featured Homes",
+      "subtitle": "Explore our handpicked selection of stunning tiny houses"
+    },
+    "whyUs": {
+      "title": "Why Choose TinyHaven?",
+      "subtitle": "We're dedicated to helping you find the perfect tiny home"
+    },
+    "cta": {
+      "title": "Ready to Find Your Dream Home?",
+      "subtitle": "Browse our collection of beautiful tiny houses and start your journey to simple living.",
+      "button": "Explore All Homes"
+    }
+  },
+  "footer": {
+    "description": "Find your perfect tiny home. We connect dreamers with beautiful, sustainable tiny houses across the country.",
+    "quickLinks": "Quick Links",
+    "support": "Support",
+    "helpCenter": "Help Center",
+    "faqs": "FAQs",
+    "contactUs": "Contact Us",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "newsletter": "Newsletter",
+    "newsletterDesc": "Subscribe for the latest tiny home listings and tips.",
+    "subscribe": "Subscribe",
+    "emailPlaceholder": "Enter your email",
+    "allRightsReserved": "All rights reserved."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "back": "Back",
+    "next": "Next",
+    "viewAll": "View All",
+    "readMore": "Read More",
+    "learnMore": "Learn More"
+  },
+  "form": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "subject": "Subject",
+    "send": "Send Message",
+    "required": "Required",
+    "optional": "Optional"
+  }
+}
