@@ -121,7 +121,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Success Message */}
       {isSuccess && (
-        <div className="flex items-center gap-3 p-4 bg-green-50 text-green-700 rounded-xl">
+        <div className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-xl">
           <Check className="w-5 h-5 flex-shrink-0" />
           <p className="text-sm font-medium">
             Thank you for your message! We&apos;ll get back to you within 24 hours.
@@ -132,7 +132,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {/* Name Field */}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-2">
+          <label htmlFor="name" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
             Full Name <span className="text-red-500">*</span>
           </label>
           <input
@@ -143,8 +143,8 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
             onChange={handleChange}
             placeholder="John Doe"
             className={cn(
-              'w-full px-4 py-3 bg-neutral-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all',
-              errors.name ? 'border-red-300' : 'border-neutral-200'
+              'w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-900 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all text-neutral-900 dark:text-white placeholder-neutral-500',
+              errors.name ? 'border-red-300 dark:border-red-500' : 'border-neutral-200 dark:border-neutral-700'
             )}
           />
           {errors.name && (
@@ -157,7 +157,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
 
         {/* Email Field */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">
+          <label htmlFor="email" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
             Email Address <span className="text-red-500">*</span>
           </label>
           <input
@@ -168,8 +168,8 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
             onChange={handleChange}
             placeholder="john@example.com"
             className={cn(
-              'w-full px-4 py-3 bg-neutral-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all',
-              errors.email ? 'border-red-300' : 'border-neutral-200'
+              'w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-900 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all text-neutral-900 dark:text-white placeholder-neutral-500',
+              errors.email ? 'border-red-300 dark:border-red-500' : 'border-neutral-200 dark:border-neutral-700'
             )}
           />
           {errors.email && (
@@ -184,7 +184,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {/* Phone Field */}
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-neutral-700 mb-2">
+          <label htmlFor="phone" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
             Phone Number <span className="text-neutral-400">(optional)</span>
           </label>
           <input
@@ -195,8 +195,8 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
             onChange={handleChange}
             placeholder="(555) 123-4567"
             className={cn(
-              'w-full px-4 py-3 bg-neutral-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all',
-              errors.phone ? 'border-red-300' : 'border-neutral-200'
+              'w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-900 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all text-neutral-900 dark:text-white placeholder-neutral-500',
+              errors.phone ? 'border-red-300 dark:border-red-500' : 'border-neutral-200 dark:border-neutral-700'
             )}
           />
           {errors.phone && (
@@ -209,7 +209,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
 
         {/* Subject Field */}
         <div>
-          <label htmlFor="subject" className="block text-sm font-medium text-neutral-700 mb-2">
+          <label htmlFor="subject" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
             Subject <span className="text-red-500">*</span>
           </label>
           <select
@@ -218,8 +218,8 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
             value={formData.subject}
             onChange={handleChange}
             className={cn(
-              'w-full px-4 py-3 bg-neutral-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all appearance-none cursor-pointer',
-              errors.subject ? 'border-red-300' : 'border-neutral-200'
+              'w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-900 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all appearance-none cursor-pointer text-neutral-900 dark:text-white',
+              errors.subject ? 'border-red-300 dark:border-red-500' : 'border-neutral-200 dark:border-neutral-700'
             )}
           >
             <option value="">Select a subject</option>
@@ -245,7 +245,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
 
       {/* Message Field */}
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-neutral-700 mb-2">
+        <label htmlFor="message" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
           Message <span className="text-red-500">*</span>
         </label>
         <textarea
@@ -256,8 +256,8 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
           rows={5}
           placeholder="Tell us about what you're looking for..."
           className={cn(
-            'w-full px-4 py-3 bg-neutral-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all resize-none',
-            errors.message ? 'border-red-300' : 'border-neutral-200'
+            'w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-900 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all resize-none text-neutral-900 dark:text-white placeholder-neutral-500',
+            errors.message ? 'border-red-300 dark:border-red-500' : 'border-neutral-200 dark:border-neutral-700'
           )}
         />
         {errors.message && (
@@ -292,7 +292,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
         )}
       </button>
 
-      <p className="text-sm text-neutral-500 text-center">
+      <p className="text-sm text-neutral-500 dark:text-neutral-400 text-center">
         We typically respond within 24 hours. Your information is secure and will never be shared.
       </p>
     </form>

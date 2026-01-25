@@ -94,14 +94,14 @@ export default function HousesPage() {
   }, [filters, sortBy])
 
   return (
-    <div className="min-h-screen bg-neutral-50 pt-20">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 pt-20">
       {/* Page Header */}
-      <div className="bg-white border-b border-neutral-100">
+      <div className="bg-white dark:bg-neutral-800 border-b border-neutral-100 dark:border-neutral-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-2">
+          <h1 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white mb-2">
             {t('houses.title')}
           </h1>
-          <p className="text-lg text-neutral-600">
+          <p className="text-lg text-neutral-600 dark:text-neutral-400">
             {t('houses.subtitle')}
           </p>
         </div>
@@ -117,8 +117,8 @@ export default function HousesPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div className="flex items-center gap-2">
             <SlidersHorizontal className="w-5 h-5 text-neutral-400" />
-            <span className="text-neutral-600">
-              <span className="font-semibold text-neutral-900">{filteredHouses.length}</span>
+            <span className="text-neutral-600 dark:text-neutral-400">
+              <span className="font-semibold text-neutral-900 dark:text-white">{filteredHouses.length}</span>
               {' '}{t('houses.found')}
             </span>
           </div>
@@ -128,7 +128,7 @@ export default function HousesPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-              className="px-4 py-2 bg-white border border-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer"
+              className="px-4 py-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer"
             >
               <option value="newest">{t('houses.filters.newestFirst')}</option>
               <option value="price-asc">{t('houses.filters.priceLowHigh')}</option>
@@ -137,14 +137,14 @@ export default function HousesPage() {
             </select>
 
             {/* View Toggle */}
-            <div className="flex items-center bg-white border border-neutral-200 rounded-lg p-1">
+            <div className="flex items-center bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg p-1">
               <button
                 onClick={() => setViewMode('grid')}
                 className={cn(
                   'p-2 rounded-md transition-colors',
                   viewMode === 'grid'
-                    ? 'bg-primary-50 text-primary-600'
-                    : 'text-neutral-400 hover:text-neutral-600'
+                    ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400'
+                    : 'text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300'
                 )}
                 aria-label="Grid view"
               >
@@ -155,8 +155,8 @@ export default function HousesPage() {
                 className={cn(
                   'p-2 rounded-md transition-colors',
                   viewMode === 'list'
-                    ? 'bg-primary-50 text-primary-600'
-                    : 'text-neutral-400 hover:text-neutral-600'
+                    ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400'
+                    : 'text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300'
                 )}
                 aria-label="List view"
               >
@@ -183,11 +183,11 @@ export default function HousesPage() {
         ) : (
           /* Empty State */
           <div className="text-center py-16">
-            <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-6">
               <SlidersHorizontal className="w-10 h-10 text-neutral-400" />
             </div>
-            <h3 className="text-xl font-semibold text-neutral-900 mb-2">{t('common.error')}</h3>
-            <p className="text-neutral-600 mb-6 max-w-md mx-auto">
+            <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">{t('common.error')}</h3>
+            <p className="text-neutral-600 dark:text-neutral-400 mb-6 max-w-md mx-auto">
               {t('houses.subtitle')}
             </p>
             <button

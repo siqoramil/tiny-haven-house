@@ -13,9 +13,9 @@ interface HouseCardProps {
 
 export default function HouseCard({ house, featured = false }: HouseCardProps) {
   const statusColors = {
-    available: 'bg-green-100 text-green-700',
-    pending: 'bg-yellow-100 text-yellow-700',
-    sold: 'bg-red-100 text-red-700',
+    available: 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-400',
+    pending: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-400',
+    sold: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-400',
   }
 
   const propertyTypeLabels = {
@@ -30,7 +30,7 @@ export default function HouseCard({ house, featured = false }: HouseCardProps) {
     <Link
       href={`/houses/${house.id}`}
       className={cn(
-        'group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300',
+        'group block bg-white dark:bg-neutral-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300',
         featured && 'ring-2 ring-primary-500'
       )}
     >
@@ -64,7 +64,7 @@ export default function HouseCard({ house, featured = false }: HouseCardProps) {
 
         {/* Property Type */}
         <div className="absolute top-4 right-4">
-          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-neutral-700">
+          <span className="px-3 py-1 bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm rounded-full text-xs font-medium text-neutral-700 dark:text-neutral-200">
             {propertyTypeLabels[house.propertyType]}
           </span>
         </div>
@@ -75,10 +75,10 @@ export default function HouseCard({ house, featured = false }: HouseCardProps) {
             e.preventDefault()
             // Handle favorite toggle
           }}
-          className="absolute bottom-4 right-4 p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors opacity-0 group-hover:opacity-100"
+          className="absolute bottom-4 right-4 p-2 bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm rounded-full hover:bg-white dark:hover:bg-neutral-700 transition-colors opacity-0 group-hover:opacity-100"
           aria-label="Add to favorites"
         >
-          <Heart className="w-5 h-5 text-neutral-600 hover:text-red-500 transition-colors" />
+          <Heart className="w-5 h-5 text-neutral-600 dark:text-neutral-300 hover:text-red-500 transition-colors" />
         </button>
       </div>
 
@@ -86,21 +86,21 @@ export default function HouseCard({ house, featured = false }: HouseCardProps) {
       <div className="p-5">
         {/* Price */}
         <div className="flex items-center justify-between mb-2">
-          <span className="text-2xl font-bold text-neutral-900">
+          <span className="text-2xl font-bold text-neutral-900 dark:text-white">
             {formatPrice(house.price)}
           </span>
-          <span className="text-sm text-neutral-500">
+          <span className="text-sm text-neutral-500 dark:text-neutral-400">
             {formatSize(house.size)}
           </span>
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-semibold text-neutral-900 mb-2 group-hover:text-primary-600 transition-colors">
+        <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
           {house.title}
         </h3>
 
         {/* Location */}
-        <div className="flex items-center gap-1.5 text-neutral-500 mb-4">
+        <div className="flex items-center gap-1.5 text-neutral-500 dark:text-neutral-400 mb-4">
           <MapPin className="w-4 h-4" />
           <span className="text-sm">
             {house.location.city}, {house.location.state}
@@ -108,29 +108,29 @@ export default function HouseCard({ house, featured = false }: HouseCardProps) {
         </div>
 
         {/* Features Grid */}
-        <div className="flex items-center gap-4 pt-4 border-t border-neutral-100">
+        <div className="flex items-center gap-4 pt-4 border-t border-neutral-100 dark:border-neutral-700">
           <div className="flex items-center gap-1.5">
-            <Bed className="w-4 h-4 text-neutral-400" />
-            <span className="text-sm text-neutral-600">
+            <Bed className="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
+            <span className="text-sm text-neutral-600 dark:text-neutral-300">
               {house.bedrooms} {house.bedrooms === 1 ? 'Bed' : 'Beds'}
             </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Bath className="w-4 h-4 text-neutral-400" />
-            <span className="text-sm text-neutral-600">
+            <Bath className="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
+            <span className="text-sm text-neutral-600 dark:text-neutral-300">
               {house.bathrooms} {house.bathrooms === 1 ? 'Bath' : 'Baths'}
             </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Square className="w-4 h-4 text-neutral-400" />
-            <span className="text-sm text-neutral-600">
+            <Square className="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
+            <span className="text-sm text-neutral-600 dark:text-neutral-300">
               {house.size} sqft
             </span>
           </div>
         </div>
 
         {/* Description Preview */}
-        <p className="mt-3 text-sm text-neutral-500 line-clamp-2">
+        <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400 line-clamp-2">
           {house.shortDescription}
         </p>
       </div>

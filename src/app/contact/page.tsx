@@ -75,16 +75,16 @@ const faqs = [
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-white pt-20">
+    <div className="min-h-screen bg-white dark:bg-neutral-900 pt-20">
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-primary-50 to-white py-16 lg:py-24">
+      <section className="bg-gradient-to-b from-primary-50 to-white dark:from-neutral-800 dark:to-neutral-900 py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto">
-            <span className="text-primary-600 font-medium mb-4 block">Get in Touch</span>
-            <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
+            <span className="text-primary-600 dark:text-primary-400 font-medium mb-4 block">Get in Touch</span>
+            <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-6">
               We&apos;d Love to Hear From You
             </h1>
-            <p className="text-lg text-neutral-600 leading-relaxed">
+            <p className="text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed">
               Whether you&apos;re ready to find your dream tiny home or just exploring options,
               our team is here to help. Reach out anytime.
             </p>
@@ -93,21 +93,21 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Info Cards */}
-      <section className="py-12">
+      <section className="py-12 bg-white dark:bg-neutral-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactInfo.map((item, index) => (
               <div
                 key={index}
-                className="bg-white border border-neutral-200 rounded-2xl p-6 hover:shadow-lg transition-shadow"
+                className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-6 hover:shadow-lg transition-shadow"
               >
-                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
-                  <item.icon className="w-6 h-6 text-primary-600" />
+                <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/50 rounded-xl flex items-center justify-center mb-4">
+                  <item.icon className="w-6 h-6 text-primary-600 dark:text-primary-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-neutral-900 mb-2">{item.title}</h3>
+                <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">{item.title}</h3>
                 <div className="space-y-1 mb-4">
                   {item.details.map((detail, i) => (
-                    <p key={i} className="text-neutral-600 text-sm">
+                    <p key={i} className="text-neutral-600 dark:text-neutral-400 text-sm">
                       {detail}
                     </p>
                   ))}
@@ -115,7 +115,7 @@ export default function ContactPage() {
                 {item.action && (
                   <a
                     href={item.action.href}
-                    className="text-primary-600 font-medium text-sm hover:text-primary-700 transition-colors"
+                    className="text-primary-600 dark:text-primary-400 font-medium text-sm hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
                   >
                     {item.action.label} →
                   </a>
@@ -127,15 +127,15 @@ export default function ContactPage() {
       </section>
 
       {/* Main Contact Section */}
-      <section className="py-16 lg:py-24">
+      <section className="py-16 lg:py-24 bg-white dark:bg-neutral-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Contact Form */}
             <div>
-              <h2 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 mb-2">
+              <h2 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 dark:text-white mb-2">
                 Send Us a Message
               </h2>
-              <p className="text-neutral-600 mb-8">
+              <p className="text-neutral-600 dark:text-neutral-400 mb-8">
                 Fill out the form below and we&apos;ll get back to you within 24 hours.
               </p>
               <ContactForm />
@@ -145,21 +145,21 @@ export default function ContactPage() {
             <div className="space-y-8">
               {/* Quick Actions */}
               <div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-6">Quick Actions</h3>
+                <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-6">Quick Actions</h3>
                 <div className="space-y-4">
                   {quickActions.map((action, index) => (
                     <div
                       key={index}
-                      className="flex items-start gap-4 p-4 bg-neutral-50 rounded-xl hover:bg-neutral-100 transition-colors cursor-pointer"
+                      className="flex items-start gap-4 p-4 bg-neutral-50 dark:bg-neutral-800 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors cursor-pointer"
                     >
-                      <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <action.icon className="w-5 h-5 text-primary-600" />
+                      <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/50 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <action.icon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-semibold text-neutral-900">{action.title}</h4>
-                        <p className="text-sm text-neutral-600">{action.description}</p>
+                        <h4 className="font-semibold text-neutral-900 dark:text-white">{action.title}</h4>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400">{action.description}</p>
                       </div>
-                      <span className="text-primary-600 font-medium text-sm">{action.cta} →</span>
+                      <span className="text-primary-600 dark:text-primary-400 font-medium text-sm">{action.cta} →</span>
                     </div>
                   ))}
                 </div>
@@ -167,7 +167,7 @@ export default function ContactPage() {
 
               {/* Google Maps */}
               <div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-6">Our Location</h3>
+                <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-6">Our Location</h3>
                 <div className="rounded-2xl overflow-hidden aspect-[4/3]">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.2096789456!2d-122.6789!3d45.5152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54950a0027e0b8c5%3A0x6c8e5c0eb0a6c8b5!2sPortland%2C%20OR%2097201!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
@@ -187,13 +187,13 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 lg:py-24 bg-neutral-50">
+      <section className="py-16 lg:py-24 bg-neutral-50 dark:bg-neutral-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 mb-4">
+            <h2 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 dark:text-white mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-neutral-600">
+            <p className="text-neutral-600 dark:text-neutral-400">
               Quick answers to common questions. Can&apos;t find what you&apos;re looking for?
               Contact us directly.
             </p>
@@ -202,9 +202,9 @@ export default function ContactPage() {
           <div className="max-w-3xl mx-auto">
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 shadow-sm">
-                  <h3 className="font-semibold text-neutral-900 mb-2">{faq.question}</h3>
-                  <p className="text-neutral-600">{faq.answer}</p>
+                <div key={index} className="bg-white dark:bg-neutral-900 rounded-xl p-6 shadow-sm">
+                  <h3 className="font-semibold text-neutral-900 dark:text-white mb-2">{faq.question}</h3>
+                  <p className="text-neutral-600 dark:text-neutral-400">{faq.answer}</p>
                 </div>
               ))}
             </div>

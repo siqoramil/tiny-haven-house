@@ -139,13 +139,13 @@ export default function HomePage() {
       </section>
 
       {/* Featured Houses Section */}
-      <section className="py-20 lg:py-32">
+      <section className="py-20 lg:py-32 bg-white dark:bg-neutral-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
             <div>
-              <span className="text-primary-600 font-medium mb-2 block">Featured Listings</span>
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900">
+              <span className="text-primary-600 dark:text-primary-400 font-medium mb-2 block">Featured Listings</span>
+              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white">
                 Handpicked Tiny Homes
               </h2>
             </div>
@@ -168,15 +168,15 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 lg:py-32 bg-neutral-50">
+      <section className="py-20 lg:py-32 bg-neutral-50 dark:bg-neutral-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-primary-600 font-medium mb-2 block">Why Choose Us</span>
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <span className="text-primary-600 dark:text-primary-400 font-medium mb-2 block">Why Choose Us</span>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white mb-4">
               The TinyHaven Difference
             </h2>
-            <p className="text-lg text-neutral-600">
+            <p className="text-lg text-neutral-600 dark:text-neutral-300">
               We&apos;re not just selling homes — we&apos;re helping you discover a lifestyle of
               freedom, sustainability, and intentional living.
             </p>
@@ -187,15 +187,15 @@ export default function HomePage() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white dark:bg-neutral-900 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
-                  <feature.icon className="w-7 h-7 text-primary-600" />
+                <div className="w-14 h-14 bg-primary-100 dark:bg-primary-900/50 rounded-xl flex items-center justify-center mb-6">
+                  <feature.icon className="w-7 h-7 text-primary-600 dark:text-primary-400" />
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-neutral-600 leading-relaxed">
+                <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -205,13 +205,13 @@ export default function HomePage() {
       </section>
 
       {/* Recent Listings Section */}
-      <section className="py-20 lg:py-32">
+      <section className="py-20 lg:py-32 bg-white dark:bg-neutral-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
             <div>
-              <span className="text-primary-600 font-medium mb-2 block">Latest Additions</span>
-              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900">
+              <span className="text-primary-600 dark:text-primary-400 font-medium mb-2 block">Latest Additions</span>
+              <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white">
                 Recently Listed
               </h2>
             </div>

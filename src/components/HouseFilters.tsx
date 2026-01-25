@@ -425,9 +425,9 @@ export default function HouseFilters({ onFilterChange, locations }: HouseFilters
   const hasActiveFilters = Object.values(filters).some((v) => v !== '')
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-neutral-100">
+    <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-700">
       {/* Search Bar */}
-      <div className="p-4 border-b border-neutral-100">
+      <div className="p-4 border-b border-neutral-100 dark:border-neutral-700">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
           <input
@@ -435,7 +435,7 @@ export default function HouseFilters({ onFilterChange, locations }: HouseFilters
             placeholder={t('houses.filters.search')}
             value={filters.search}
             onChange={(e) => handleChange('search', e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+            className="w-full pl-12 pr-4 py-3 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-neutral-900 dark:text-white placeholder-neutral-500"
           />
         </div>
       </div>
@@ -486,8 +486,8 @@ export default function HouseFilters({ onFilterChange, locations }: HouseFilters
           className={cn(
             'flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors',
             isExpanded
-              ? 'bg-primary-50 text-primary-700'
-              : 'bg-neutral-50 text-neutral-600 hover:bg-neutral-100'
+              ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-700 dark:text-primary-400'
+              : 'bg-neutral-50 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-600'
           )}
         >
           <SlidersHorizontal className="w-4 h-4" />
@@ -498,7 +498,7 @@ export default function HouseFilters({ onFilterChange, locations }: HouseFilters
         {hasActiveFilters && (
           <button
             onClick={clearFilters}
-            className="flex items-center gap-1.5 px-3 py-2.5 text-sm text-red-600 hover:text-red-700 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2.5 text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors"
           >
             <X className="w-4 h-4" />
             {t('houses.filters.clearAll')}
@@ -508,11 +508,11 @@ export default function HouseFilters({ onFilterChange, locations }: HouseFilters
 
       {/* Expanded Filters */}
       {isExpanded && (
-        <div className="p-4 pt-0 border-t border-neutral-100 mt-2">
+        <div className="p-4 pt-0 border-t border-neutral-100 dark:border-neutral-700 mt-2">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
             {/* Size Range */}
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                 {t('houses.filters.size')}
               </label>
               <div className="flex items-center gap-2">
@@ -521,7 +521,7 @@ export default function HouseFilters({ onFilterChange, locations }: HouseFilters
                   placeholder="Min"
                   value={filters.sizeMin}
                   onChange={(e) => handleChange('sizeMin', e.target.value)}
-                  className="w-full px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-3 py-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 text-neutral-900 dark:text-white placeholder-neutral-500"
                 />
                 <span className="text-neutral-400">-</span>
                 <input
@@ -529,14 +529,14 @@ export default function HouseFilters({ onFilterChange, locations }: HouseFilters
                   placeholder="Max"
                   value={filters.sizeMax}
                   onChange={(e) => handleChange('sizeMax', e.target.value)}
-                  className="w-full px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-3 py-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 text-neutral-900 dark:text-white placeholder-neutral-500"
                 />
               </div>
             </div>
 
             {/* Custom Price Range */}
             <div>
-              <label className="block text-sm font-medium text-neutral-700 mb-2">
+              <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                 {t('houses.filters.customPrice')}
               </label>
               <div className="flex items-center gap-2">
@@ -545,7 +545,7 @@ export default function HouseFilters({ onFilterChange, locations }: HouseFilters
                   placeholder="Min $"
                   value={filters.priceMin}
                   onChange={(e) => handleChange('priceMin', e.target.value)}
-                  className="w-full px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-3 py-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 text-neutral-900 dark:text-white placeholder-neutral-500"
                 />
                 <span className="text-neutral-400">-</span>
                 <input
@@ -553,7 +553,7 @@ export default function HouseFilters({ onFilterChange, locations }: HouseFilters
                   placeholder="Max $"
                   value={filters.priceMax}
                   onChange={(e) => handleChange('priceMax', e.target.value)}
-                  className="w-full px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="w-full px-3 py-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 text-neutral-900 dark:text-white placeholder-neutral-500"
                 />
               </div>
             </div>

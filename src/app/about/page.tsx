@@ -74,21 +74,21 @@ const milestones = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-neutral-900">
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pb-32 overflow-hidden">
         {/* Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-50 to-white" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-50 to-white dark:from-neutral-800 dark:to-neutral-900" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-primary-600 font-medium mb-4 block">About TinyHaven</span>
-              <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 mb-6">
+              <span className="text-primary-600 dark:text-primary-400 font-medium mb-4 block">About TinyHaven</span>
+              <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-6">
                 We Believe in the Power of
-                <span className="text-primary-600"> Small Living</span>
+                <span className="text-primary-600 dark:text-primary-400"> Small Living</span>
               </h1>
-              <p className="text-lg text-neutral-600 leading-relaxed mb-8">
+              <p className="text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed mb-8">
                 Founded in 2014, TinyHaven has grown from a small team of dreamers into the
                 nation&apos;s leading marketplace for tiny homes. We connect people with beautiful,
                 sustainable small homes that prove bigger isn&apos;t always better.
@@ -103,7 +103,7 @@ export default function AboutPage() {
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-xl font-semibold hover:border-neutral-400 hover:bg-neutral-50 transition-all"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-200 rounded-xl font-semibold hover:border-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all"
                 >
                   Get in Touch
                 </Link>
@@ -121,15 +121,15 @@ export default function AboutPage() {
                 />
               </div>
               {/* Floating Stats Card */}
-              <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-6">
+              <div className="absolute -bottom-6 -left-6 bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-6">
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <div className="text-3xl font-bold text-primary-600">500+</div>
-                    <div className="text-sm text-neutral-500">Homes Sold</div>
+                    <div className="text-3xl font-bold text-primary-600 dark:text-primary-400">500+</div>
+                    <div className="text-sm text-neutral-500 dark:text-neutral-400">Homes Sold</div>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-primary-600">10+</div>
-                    <div className="text-sm text-neutral-500">Years</div>
+                    <div className="text-3xl font-bold text-primary-600 dark:text-primary-400">10+</div>
+                    <div className="text-sm text-neutral-500 dark:text-neutral-400">Years</div>
                   </div>
                 </div>
               </div>
@@ -156,14 +156,14 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 lg:py-32">
+      <section className="py-20 lg:py-32 bg-white dark:bg-neutral-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-primary-600 font-medium mb-4 block">Our Values</span>
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <span className="text-primary-600 dark:text-primary-400 font-medium mb-4 block">Our Values</span>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white mb-4">
               What Drives Us Every Day
             </h2>
-            <p className="text-lg text-neutral-600">
+            <p className="text-lg text-neutral-600 dark:text-neutral-300">
               Our core values guide everything we do, from selecting homes to serving our customers.
             </p>
           </div>
@@ -172,13 +172,13 @@ export default function AboutPage() {
             {values.map((value, index) => (
               <div
                 key={index}
-                className="bg-neutral-50 rounded-2xl p-8 hover:shadow-lg transition-shadow"
+                className="bg-neutral-50 dark:bg-neutral-800 rounded-2xl p-8 hover:shadow-lg transition-shadow"
               >
-                <div className="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
-                  <value.icon className="w-7 h-7 text-primary-600" />
+                <div className="w-14 h-14 bg-primary-100 dark:bg-primary-900/50 rounded-xl flex items-center justify-center mb-6">
+                  <value.icon className="w-7 h-7 text-primary-600 dark:text-primary-400" />
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3">{value.title}</h3>
-                <p className="text-neutral-600 leading-relaxed">{value.description}</p>
+                <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-3">{value.title}</h3>
+                <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">{value.description}</p>
               </div>
             ))}
           </div>
@@ -186,14 +186,14 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline Section */}
-      <section className="py-20 lg:py-32 bg-neutral-50">
+      <section className="py-20 lg:py-32 bg-neutral-50 dark:bg-neutral-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-primary-600 font-medium mb-4 block">Our Journey</span>
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <span className="text-primary-600 dark:text-primary-400 font-medium mb-4 block">Our Journey</span>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white mb-4">
               A Decade of Growth
             </h2>
-            <p className="text-lg text-neutral-600">
+            <p className="text-lg text-neutral-600 dark:text-neutral-300">
               From a small startup to the nation&apos;s leading tiny home marketplace.
             </p>
           </div>
@@ -201,19 +201,19 @@ export default function AboutPage() {
           <div className="max-w-3xl mx-auto">
             <div className="relative">
               {/* Timeline Line */}
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary-200" />
+              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary-200 dark:bg-primary-800" />
 
               {/* Milestones */}
               <div className="space-y-8">
                 {milestones.map((milestone, index) => (
                   <div key={index} className="relative flex items-start gap-6 pl-20">
                     {/* Dot */}
-                    <div className="absolute left-6 w-4 h-4 bg-primary-600 rounded-full ring-4 ring-white" />
+                    <div className="absolute left-6 w-4 h-4 bg-primary-600 rounded-full ring-4 ring-white dark:ring-neutral-800" />
 
                     {/* Content */}
-                    <div className="bg-white rounded-xl p-6 shadow-sm flex-1">
-                      <div className="text-primary-600 font-bold mb-1">{milestone.year}</div>
-                      <div className="text-neutral-700">{milestone.event}</div>
+                    <div className="bg-white dark:bg-neutral-900 rounded-xl p-6 shadow-sm flex-1">
+                      <div className="text-primary-600 dark:text-primary-400 font-bold mb-1">{milestone.year}</div>
+                      <div className="text-neutral-700 dark:text-neutral-300">{milestone.event}</div>
                     </div>
                   </div>
                 ))}
@@ -224,14 +224,14 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 lg:py-32">
+      <section className="py-20 lg:py-32 bg-white dark:bg-neutral-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-primary-600 font-medium mb-4 block">Our Team</span>
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 mb-4">
+            <span className="text-primary-600 dark:text-primary-400 font-medium mb-4 block">Our Team</span>
+            <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white mb-4">
               Meet the People Behind TinyHaven
             </h2>
-            <p className="text-lg text-neutral-600">
+            <p className="text-lg text-neutral-600 dark:text-neutral-300">
               A passionate team dedicated to helping you find your perfect tiny home.
             </p>
           </div>
@@ -248,9 +248,9 @@ export default function AboutPage() {
                     sizes="192px"
                   />
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-1">{member.name}</h3>
-                <p className="text-primary-600 font-medium mb-2">{member.role}</p>
-                <p className="text-neutral-600 text-sm">{member.bio}</p>
+                <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-1">{member.name}</h3>
+                <p className="text-primary-600 dark:text-primary-400 font-medium mb-2">{member.role}</p>
+                <p className="text-neutral-600 dark:text-neutral-400 text-sm">{member.bio}</p>
               </div>
             ))}
           </div>
