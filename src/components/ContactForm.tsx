@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Send, Check, AlertCircle, Loader2 } from 'lucide-react'
 import { isValidEmail, isValidPhone, cn } from '@/lib/utils'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface FormData {
   name: string
@@ -26,11 +27,13 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
+  const { t } = useLanguage()
+
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     phone: '',
-    subject: houseTitle ? `Inquiry about: ${houseTitle}` : '',
+    subject: houseTitle ? `${t('form.inquiryAbout')}: ${houseTitle}` : '',
     message: '',
   })
   const [errors, setErrors] = useState<FormErrors>({})
@@ -41,27 +44,27 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
     const newErrors: FormErrors = {}
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required'
+      newErrors.name = t('form.nameRequired')
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required'
+      newErrors.email = t('form.emailRequired')
     } else if (!isValidEmail(formData.email)) {
-      newErrors.email = 'Please enter a valid email'
+      newErrors.email = t('form.emailInvalid')
     }
 
     if (formData.phone && !isValidPhone(formData.phone)) {
-      newErrors.phone = 'Please enter a valid phone number'
+      newErrors.phone = t('form.phoneInvalid')
     }
 
     if (!formData.subject.trim()) {
-      newErrors.subject = 'Subject is required'
+      newErrors.subject = t('form.subjectRequired')
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'Message is required'
+      newErrors.message = t('form.messageRequired')
     } else if (formData.message.length < 10) {
-      newErrors.message = 'Message must be at least 10 characters'
+      newErrors.message = t('form.messageMinLength')
     }
 
     setErrors(newErrors)
@@ -109,12 +112,12 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
   }
 
   const subjects = [
-    'General Inquiry',
-    'Schedule a Viewing',
-    'Pricing Question',
-    'Financing Options',
-    'Custom Build Request',
-    'Other',
+    { value: 'General Inquiry', label: t('form.generalInquiry') },
+    { value: 'Schedule a Viewing', label: t('form.scheduleViewing') },
+    { value: 'Pricing Question', label: t('form.pricingQuestion') },
+    { value: 'Financing Options', label: t('form.financingOptions') },
+    { value: 'Custom Build Request', label: t('form.customBuild') },
+    { value: 'Other', label: t('form.other') },
   ]
 
   return (
@@ -124,7 +127,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
         <div className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-xl">
           <Check className="w-5 h-5 flex-shrink-0" />
           <p className="text-sm font-medium">
-            Thank you for your message! We&apos;ll get back to you within 24 hours.
+            {t('form.successMessage')}
           </p>
         </div>
       )}
@@ -133,7 +136,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
         {/* Name Field */}
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-            Full Name <span className="text-red-500">*</span>
+            {t('form.fullName')} <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -141,7 +144,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            placeholder="John Doe"
+            placeholder={t('form.placeholder.name')}
             className={cn(
               'w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-900 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all text-neutral-900 dark:text-white placeholder-neutral-500',
               errors.name ? 'border-red-300 dark:border-red-500' : 'border-neutral-200 dark:border-neutral-700'
@@ -158,7 +161,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
         {/* Email Field */}
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-            Email Address <span className="text-red-500">*</span>
+            {t('form.emailAddress')} <span className="text-red-500">*</span>
           </label>
           <input
             type="email"
@@ -166,7 +169,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="john@example.com"
+            placeholder={t('form.placeholder.email')}
             className={cn(
               'w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-900 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all text-neutral-900 dark:text-white placeholder-neutral-500',
               errors.email ? 'border-red-300 dark:border-red-500' : 'border-neutral-200 dark:border-neutral-700'
@@ -185,7 +188,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
         {/* Phone Field */}
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-            Phone Number <span className="text-neutral-400">(optional)</span>
+            {t('form.phoneNumber')} <span className="text-neutral-400">({t('form.optional')})</span>
           </label>
           <input
             type="tel"
@@ -193,7 +196,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="(555) 123-4567"
+            placeholder={t('form.placeholder.phone')}
             className={cn(
               'w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-900 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all text-neutral-900 dark:text-white placeholder-neutral-500',
               errors.phone ? 'border-red-300 dark:border-red-500' : 'border-neutral-200 dark:border-neutral-700'
@@ -210,7 +213,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
         {/* Subject Field */}
         <div>
           <label htmlFor="subject" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-            Subject <span className="text-red-500">*</span>
+            {t('form.subject')} <span className="text-red-500">*</span>
           </label>
           <select
             id="subject"
@@ -222,15 +225,15 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
               errors.subject ? 'border-red-300 dark:border-red-500' : 'border-neutral-200 dark:border-neutral-700'
             )}
           >
-            <option value="">Select a subject</option>
+            <option value="">{t('form.selectSubject')}</option>
             {houseTitle && (
-              <option value={`Inquiry about: ${houseTitle}`}>
-                Inquiry about: {houseTitle}
+              <option value={`${t('form.inquiryAbout')}: ${houseTitle}`}>
+                {t('form.inquiryAbout')}: {houseTitle}
               </option>
             )}
             {subjects.map((subject) => (
-              <option key={subject} value={subject}>
-                {subject}
+              <option key={subject.value} value={subject.value}>
+                {subject.label}
               </option>
             ))}
           </select>
@@ -246,7 +249,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
       {/* Message Field */}
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-          Message <span className="text-red-500">*</span>
+          {t('form.message')} <span className="text-red-500">*</span>
         </label>
         <textarea
           id="message"
@@ -254,7 +257,7 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
           value={formData.message}
           onChange={handleChange}
           rows={5}
-          placeholder="Tell us about what you're looking for..."
+          placeholder={t('form.placeholder.message')}
           className={cn(
             'w-full px-4 py-3 bg-neutral-50 dark:bg-neutral-900 border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all resize-none text-neutral-900 dark:text-white placeholder-neutral-500',
             errors.message ? 'border-red-300 dark:border-red-500' : 'border-neutral-200 dark:border-neutral-700'
@@ -282,18 +285,18 @@ export default function ContactForm({ houseId, houseTitle }: ContactFormProps) {
         {isSubmitting ? (
           <>
             <Loader2 className="w-5 h-5 animate-spin" />
-            Sending...
+            {t('form.sending')}
           </>
         ) : (
           <>
             <Send className="w-5 h-5" />
-            Send Message
+            {t('form.send')}
           </>
         )}
       </button>
 
       <p className="text-sm text-neutral-500 dark:text-neutral-400 text-center">
-        We typically respond within 24 hours. Your information is secure and will never be shared.
+        {t('form.responseNote')}
       </p>
     </form>
   )

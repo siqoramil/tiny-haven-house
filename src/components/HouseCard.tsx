@@ -2,9 +2,12 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { MapPin, Bed, Bath, Square, Heart } from 'lucide-react'
+import { MapPin, Bed, Bath, Square, Heart, ShoppingCart } from 'lucide-react'
 import { House } from '@/types'
 import { formatPrice, formatSize, cn } from '@/lib/utils'
+import { useFavorites } from '@/contexts/FavoritesContext'
+import { useCart } from '@/contexts/CartContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface HouseCardProps {
   house: House
@@ -12,18 +15,57 @@ interface HouseCardProps {
 }
 
 export default function HouseCard({ house, featured = false }: HouseCardProps) {
+  const { toggleFavorite, isFavorite } = useFavorites()
+  const { addToCart, isInCart } = useCart()
+  const { t } = useLanguage()
+
   const statusColors = {
     available: 'bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-400',
     pending: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-400',
     sold: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-400',
   }
 
-  const propertyTypeLabels = {
-    cabin: 'Cabin',
-    container: 'Container',
-    modular: 'Modular',
-    traditional: 'Traditional',
-    'a-frame': 'A-Frame',
+  const statusKeys: Record<string, string> = {
+    available: 'houses.available',
+    pending: 'houses.pending',
+    sold: 'houses.sold',
+  }
+
+  const propertyTypeKeys: Record<string, string> = {
+    cabin: 'houses.types.cabin',
+    container: 'houses.types.container',
+    modular: 'houses.types.modular',
+    traditional: 'houses.types.traditional',
+    'a-frame': 'houses.types.aFrame',
+  }
+
+  const liked = isFavorite(house.id)
+  const inCart = isInCart(house.id)
+
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    toggleFavorite({
+      id: house.id,
+      name: house.title,
+      price: house.price,
+      image: house.images[0],
+      location: `${house.location.city}, ${house.location.state}`,
+    })
+  }
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (!inCart) {
+      addToCart({
+        id: house.id,
+        name: house.title,
+        price: house.price,
+        image: house.images[0],
+        location: `${house.location.city}, ${house.location.state}`,
+      })
+    }
   }
 
   return (
@@ -53,11 +95,11 @@ export default function HouseCard({ house, featured = false }: HouseCardProps) {
             'px-3 py-1 rounded-full text-xs font-medium capitalize',
             statusColors[house.status]
           )}>
-            {house.status}
+            {t(statusKeys[house.status])}
           </span>
           {house.isFeatured && (
             <span className="px-3 py-1 bg-primary-600 text-white rounded-full text-xs font-medium">
-              Featured
+              {t('houses.featured')}
             </span>
           )}
         </div>
@@ -65,21 +107,37 @@ export default function HouseCard({ house, featured = false }: HouseCardProps) {
         {/* Property Type */}
         <div className="absolute top-4 right-4">
           <span className="px-3 py-1 bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm rounded-full text-xs font-medium text-neutral-700 dark:text-neutral-200">
-            {propertyTypeLabels[house.propertyType]}
+            {t(propertyTypeKeys[house.propertyType])}
           </span>
         </div>
 
-        {/* Favorite Button */}
-        <button
-          onClick={(e) => {
-            e.preventDefault()
-            // Handle favorite toggle
-          }}
-          className="absolute bottom-4 right-4 p-2 bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm rounded-full hover:bg-white dark:hover:bg-neutral-700 transition-colors opacity-0 group-hover:opacity-100"
-          aria-label="Add to favorites"
-        >
-          <Heart className="w-5 h-5 text-neutral-600 dark:text-neutral-300 hover:text-red-500 transition-colors" />
-        </button>
+        {/* Action Buttons */}
+        <div className="absolute bottom-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <button
+            onClick={handleAddToCart}
+            className={cn(
+              'p-2 backdrop-blur-sm rounded-full transition-colors',
+              inCart
+                ? 'bg-primary-500 text-white'
+                : 'bg-white/90 dark:bg-neutral-800/90 hover:bg-white dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300 hover:text-primary-500'
+            )}
+            aria-label={t('houses.addToCart')}
+          >
+            <ShoppingCart className="w-5 h-5" />
+          </button>
+          <button
+            onClick={handleToggleFavorite}
+            className={cn(
+              'p-2 backdrop-blur-sm rounded-full transition-colors',
+              liked
+                ? 'bg-red-500 text-white'
+                : 'bg-white/90 dark:bg-neutral-800/90 hover:bg-white dark:hover:bg-neutral-700 text-neutral-600 dark:text-neutral-300 hover:text-red-500'
+            )}
+            aria-label={t('header.favorites')}
+          >
+            <Heart className="w-5 h-5" fill={liked ? 'currentColor' : 'none'} />
+          </button>
+        </div>
       </div>
 
       {/* Content */}
@@ -112,19 +170,19 @@ export default function HouseCard({ house, featured = false }: HouseCardProps) {
           <div className="flex items-center gap-1.5">
             <Bed className="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
             <span className="text-sm text-neutral-600 dark:text-neutral-300">
-              {house.bedrooms} {house.bedrooms === 1 ? 'Bed' : 'Beds'}
+              {house.bedrooms} {t('houseDetail.bedrooms')}
             </span>
           </div>
           <div className="flex items-center gap-1.5">
             <Bath className="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
             <span className="text-sm text-neutral-600 dark:text-neutral-300">
-              {house.bathrooms} {house.bathrooms === 1 ? 'Bath' : 'Baths'}
+              {house.bathrooms} {t('houseDetail.bathrooms')}
             </span>
           </div>
           <div className="flex items-center gap-1.5">
             <Square className="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
             <span className="text-sm text-neutral-600 dark:text-neutral-300">
-              {house.size} sqft
+              {house.size} {t('houseDetail.sqft')}
             </span>
           </div>
         </div>

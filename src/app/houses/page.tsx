@@ -133,7 +133,7 @@ export default function HousesPage() {
               <option value="newest">{t('houses.filters.newestFirst')}</option>
               <option value="price-asc">{t('houses.filters.priceLowHigh')}</option>
               <option value="price-desc">{t('houses.filters.priceHighLow')}</option>
-              <option value="size">Largest First</option>
+              <option value="size">{t('houses.largestFirst')}</option>
             </select>
 
             {/* View Toggle */}
@@ -186,9 +186,9 @@ export default function HousesPage() {
             <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-6">
               <SlidersHorizontal className="w-10 h-10 text-neutral-400" />
             </div>
-            <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">{t('common.error')}</h3>
+            <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">{t('houses.noResults')}</h3>
             <p className="text-neutral-600 dark:text-neutral-400 mb-6 max-w-md mx-auto">
-              {t('houses.subtitle')}
+              {t('houses.noResultsDesc')}
             </p>
             <button
               onClick={() =>

@@ -1,27 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import { Home, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
-
-const footerLinks = {
-  explore: [
-    { label: 'All Houses', href: '/houses' },
-    { label: 'Featured Homes', href: '/houses?featured=true' },
-    { label: 'Cabins', href: '/houses?type=cabin' },
-    { label: 'Container Homes', href: '/houses?type=container' },
-    { label: 'A-Frames', href: '/houses?type=a-frame' },
-  ],
-  company: [
-    { label: 'About Us', href: '/about' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'Careers', href: '/careers' },
-    { label: 'Press', href: '/press' },
-  ],
-  resources: [
-    { label: 'Tiny Living Guide', href: '/guides/tiny-living' },
-    { label: 'Financing Options', href: '/financing' },
-    { label: 'FAQ', href: '/faq' },
-    { label: 'Blog', href: '/blog' },
-  ],
-}
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const socialLinks = [
   { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
@@ -31,6 +12,30 @@ const socialLinks = [
 ]
 
 export default function Footer() {
+  const { t } = useLanguage()
+
+  const footerLinks = {
+    explore: [
+      { label: t('footer.allHouses'), href: '/houses' },
+      { label: t('footer.featuredHomes'), href: '/houses?featured=true' },
+      { label: t('footer.cabins'), href: '/houses?type=cabin' },
+      { label: t('footer.containerHomes'), href: '/houses?type=container' },
+      { label: t('footer.aFrames'), href: '/houses?type=a-frame' },
+    ],
+    company: [
+      { label: t('footer.aboutUs'), href: '/about' },
+      { label: t('footer.contact'), href: '/contact' },
+      { label: t('footer.careers'), href: '/careers' },
+      { label: t('footer.press'), href: '/press' },
+    ],
+    resources: [
+      { label: t('footer.tinyLivingGuide'), href: '/guides/tiny-living' },
+      { label: t('footer.financingOptions'), href: '/financing' },
+      { label: t('footer.faq'), href: '/faq' },
+      { label: t('footer.blog'), href: '/blog' },
+    ],
+  }
+
   return (
     <footer className="bg-neutral-900 text-white">
       {/* Main Footer */}
@@ -45,8 +50,7 @@ export default function Footer() {
               <span className="text-xl font-display font-bold">TinyHaven</span>
             </Link>
             <p className="text-neutral-400 text-sm leading-relaxed mb-6 max-w-sm">
-              Discover the perfect tiny house for your lifestyle. We connect dreamers with beautiful,
-              sustainable small homes across the country.
+              {t('footer.description')}
             </p>
 
             {/* Contact Info */}
@@ -68,7 +72,7 @@ export default function Footer() {
 
           {/* Explore Links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Explore</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">{t('footer.explore')}</h3>
             <ul className="space-y-3">
               {footerLinks.explore.map((link) => (
                 <li key={link.href}>
@@ -85,7 +89,7 @@ export default function Footer() {
 
           {/* Company Links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Company</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">{t('footer.company')}</h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
@@ -102,7 +106,7 @@ export default function Footer() {
 
           {/* Resources Links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">Resources</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">{t('footer.resources')}</h3>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.href}>
@@ -125,7 +129,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Copyright */}
             <p className="text-neutral-500 text-sm">
-              © {new Date().getFullYear()} TinyHaven. All rights reserved.
+              &copy; {new Date().getFullYear()} TinyHaven. {t('footer.allRightsReserved')}
             </p>
 
             {/* Social Links */}
@@ -147,10 +151,10 @@ export default function Footer() {
             {/* Legal Links */}
             <div className="flex items-center gap-6">
               <Link href="/privacy" className="text-neutral-500 hover:text-white text-sm transition-colors">
-                Privacy Policy
+                {t('footer.privacyPolicy')}
               </Link>
               <Link href="/terms" className="text-neutral-500 hover:text-white text-sm transition-colors">
-                Terms of Service
+                {t('footer.termsOfService')}
               </Link>
             </div>
           </div>

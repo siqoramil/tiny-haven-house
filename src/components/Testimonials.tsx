@@ -5,9 +5,11 @@ import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react'
 import { testimonials } from '@/data/houses'
 import { cn } from '@/lib/utils'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const { t } = useLanguage()
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))
@@ -25,10 +27,10 @@ export default function Testimonials() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white mb-4">
-            What Our Clients Say
+            {t('testimonials.title')}
           </h2>
           <p className="text-lg text-neutral-600 dark:text-neutral-400">
-            Real stories from people who found their perfect tiny home through TinyHaven.
+            {t('testimonials.subtitle')}
           </p>
         </div>
 

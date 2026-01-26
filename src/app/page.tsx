@@ -1,45 +1,49 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Home, Leaf, Shield, MapPin, Search, ChevronRight } from 'lucide-react'
 import HouseCard from '@/components/HouseCard'
 import Testimonials from '@/components/Testimonials'
 import { getFeaturedHouses, houses } from '@/data/houses'
-
-// Stats data
-const stats = [
-  { value: '150+', label: 'Homes Sold' },
-  { value: '25+', label: 'Locations' },
-  { value: '98%', label: 'Happy Clients' },
-  { value: '10+', label: 'Years Experience' },
-]
-
-// Features data
-const features = [
-  {
-    icon: Home,
-    title: 'Quality Craftsmanship',
-    description: 'Every tiny home is built with attention to detail using premium materials that last.',
-  },
-  {
-    icon: Leaf,
-    title: 'Sustainable Living',
-    description: 'Eco-friendly designs with solar options, rainwater collection, and energy efficiency.',
-  },
-  {
-    icon: Shield,
-    title: 'Trusted Process',
-    description: 'From selection to move-in, our team guides you through every step with transparency.',
-  },
-  {
-    icon: MapPin,
-    title: 'Prime Locations',
-    description: 'Curated properties in stunning locations from mountains to beaches to cities.',
-  },
-]
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function HomePage() {
+  const { t } = useLanguage()
   const featuredHouses = getFeaturedHouses()
   const recentHouses = houses.slice(0, 6)
+
+  // Stats data
+  const stats = [
+    { value: '150+', label: t('home.stats.homesSold') },
+    { value: '25+', label: t('home.stats.locations') },
+    { value: '98%', label: t('home.stats.happyClients') },
+    { value: '10+', label: t('home.stats.yearsExperience') },
+  ]
+
+  // Features data
+  const features = [
+    {
+      icon: Home,
+      title: t('home.features.qualityTitle'),
+      description: t('home.features.qualityDesc'),
+    },
+    {
+      icon: Leaf,
+      title: t('home.features.sustainableTitle'),
+      description: t('home.features.sustainableDesc'),
+    },
+    {
+      icon: Shield,
+      title: t('home.features.trustedTitle'),
+      description: t('home.features.trustedDesc'),
+    },
+    {
+      icon: MapPin,
+      title: t('home.features.locationsTitle'),
+      description: t('home.features.locationsDesc'),
+    },
+  ]
 
   return (
     <>
@@ -62,16 +66,15 @@ export default function HomePage() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
           <div className="max-w-2xl">
             <span className="inline-block px-4 py-2 bg-primary-500/20 text-primary-300 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
-              Your Dream Home Awaits
+              {t('home.hero.badge')}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-6 text-shadow">
-              Find Your Perfect
+              {t('home.hero.titleLine1')}
               <br />
-              <span className="text-primary-400">Tiny House</span>
+              <span className="text-primary-400">{t('home.hero.titleLine2')}</span>
             </h1>
             <p className="text-lg sm:text-xl text-white/80 mb-8 leading-relaxed">
-              Discover beautifully crafted tiny homes in stunning locations.
-              Embrace minimalist living without compromising on comfort or style.
+              {t('home.hero.description')}
             </p>
 
             {/* CTA Buttons */}
@@ -80,14 +83,14 @@ export default function HomePage() {
                 href="/houses"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all active:scale-[0.98]"
               >
-                Browse Homes
+                {t('home.hero.browseHomes')}
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold hover:bg-white/20 transition-all border border-white/30"
               >
-                Contact Us
+                {t('home.hero.contactUs')}
               </Link>
             </div>
 
@@ -98,7 +101,7 @@ export default function HomePage() {
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
                   <input
                     type="text"
-                    placeholder="Search by location or type..."
+                    placeholder={t('home.hero.searchPlaceholder')}
                     className="w-full pl-12 pr-4 py-3 bg-white rounded-xl text-neutral-900 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   />
                 </div>
@@ -106,7 +109,7 @@ export default function HomePage() {
                   href="/houses"
                   className="px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all flex items-center justify-center gap-2"
                 >
-                  Search
+                  {t('home.hero.search')}
                   <ChevronRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -144,16 +147,16 @@ export default function HomePage() {
           {/* Section Header */}
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
             <div>
-              <span className="text-primary-600 dark:text-primary-400 font-medium mb-2 block">Featured Listings</span>
+              <span className="text-primary-600 dark:text-primary-400 font-medium mb-2 block">{t('home.featured.label')}</span>
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white">
-                Handpicked Tiny Homes
+                {t('home.featured.title')}
               </h2>
             </div>
             <Link
               href="/houses"
               className="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors"
             >
-              View All Homes
+              {t('home.featured.viewAll')}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -172,13 +175,12 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-primary-600 dark:text-primary-400 font-medium mb-2 block">Why Choose Us</span>
+            <span className="text-primary-600 dark:text-primary-400 font-medium mb-2 block">{t('home.features.label')}</span>
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white mb-4">
-              The TinyHaven Difference
+              {t('home.features.title')}
             </h2>
             <p className="text-lg text-neutral-600 dark:text-neutral-300">
-              We&apos;re not just selling homes — we&apos;re helping you discover a lifestyle of
-              freedom, sustainability, and intentional living.
+              {t('home.features.description')}
             </p>
           </div>
 
@@ -210,16 +212,16 @@ export default function HomePage() {
           {/* Section Header */}
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
             <div>
-              <span className="text-primary-600 dark:text-primary-400 font-medium mb-2 block">Latest Additions</span>
+              <span className="text-primary-600 dark:text-primary-400 font-medium mb-2 block">{t('home.recent.label')}</span>
               <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white">
-                Recently Listed
+                {t('home.recent.title')}
               </h2>
             </div>
             <Link
               href="/houses"
               className="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors"
             >
-              See All Listings
+              {t('home.recent.viewAll')}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -241,25 +243,24 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl lg:text-4xl font-display font-bold text-white mb-6">
-              Ready to Start Your Tiny Living Journey?
+              {t('home.cta.title')}
             </h2>
             <p className="text-xl text-primary-100 mb-10">
-              Whether you&apos;re looking for a weekend retreat or a full-time home,
-              we&apos;re here to help you find the perfect tiny house.
+              {t('home.cta.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/houses"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-primary-600 rounded-xl font-semibold hover:bg-neutral-100 transition-all"
               >
-                Browse All Homes
+                {t('home.cta.browseAll')}
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-700 text-white rounded-xl font-semibold hover:bg-primary-800 transition-all border border-primary-500"
               >
-                Get in Touch
+                {t('home.cta.getInTouch')}
               </Link>
             </div>
           </div>

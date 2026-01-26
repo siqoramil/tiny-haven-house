@@ -36,8 +36,12 @@
     "viewDetails": "View Details",
     "addToCart": "Add to Cart",
     "available": "Available",
+    "pending": "Pending",
     "sold": "Sold",
     "featured": "Featured",
+    "noResults": "No homes found",
+    "noResultsDesc": "Try adjusting your filters to find what you're looking for.",
+    "largestFirst": "Largest First",
     "filters": {
       "allTypes": "All Types",
       "anyPrice": "Any Price",
@@ -67,6 +71,27 @@
       "threePlus": "3+"
     }
   },
+  "houseDetail": {
+    "bedrooms": "Bed",
+    "bathrooms": "Bath",
+    "sqft": "sqft",
+    "yearBuilt": "Year Built",
+    "aboutHome": "About This Home",
+    "features": "Features",
+    "amenities": "Amenities",
+    "location": "Location",
+    "mapNote": "Map integration available upon request",
+    "interested": "Interested in this home?",
+    "quickContact": "Quick Contact",
+    "relatedHomes": "You May Also Like",
+    "backToListings": "Back to listings",
+    "salePending": "Sale Pending",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites",
+    "addToCart": "Add to Cart",
+    "inCart": "In Cart",
+    "share": "Share"
+  },
   "theme": {
     "light": "Light",
     "dark": "Dark",
@@ -75,6 +100,120 @@
     "lightDesc": "Always light mode",
     "darkDesc": "Always dark mode",
     "systemDesc": "Follow system settings"
+  },
+  "home": {
+    "hero": {
+      "badge": "Your Dream Home Awaits",
+      "titleLine1": "Find Your Perfect",
+      "titleLine2": "Tiny House",
+      "description": "Discover beautifully crafted tiny homes in stunning locations. Embrace minimalist living without compromising on comfort or style.",
+      "browseHomes": "Browse Homes",
+      "contactUs": "Contact Us",
+      "searchPlaceholder": "Search by location or type...",
+      "search": "Search",
+      "title": "Find Your Perfect Tiny Home",
+      "subtitle": "Discover beautifully designed tiny houses that combine comfort, sustainability, and style. Your dream of simple living starts here.",
+      "learnMore": "Learn More"
+    },
+    "stats": {
+      "homesSold": "Homes Sold",
+      "locations": "Locations",
+      "happyClients": "Happy Clients",
+      "yearsExperience": "Years Experience"
+    },
+    "featured": {
+      "label": "Featured Listings",
+      "title": "Handpicked Tiny Homes",
+      "viewAll": "View All Homes",
+      "subtitle": "Explore our handpicked selection of stunning tiny houses"
+    },
+    "features": {
+      "label": "Why Choose Us",
+      "title": "The TinyHaven Difference",
+      "description": "We're not just selling homes — we're helping you discover a lifestyle of freedom, sustainability, and intentional living.",
+      "qualityTitle": "Quality Craftsmanship",
+      "qualityDesc": "Every tiny home is built with attention to detail using premium materials that last.",
+      "sustainableTitle": "Sustainable Living",
+      "sustainableDesc": "Eco-friendly designs with solar options, rainwater collection, and energy efficiency.",
+      "trustedTitle": "Trusted Process",
+      "trustedDesc": "From selection to move-in, our team guides you through every step with transparency.",
+      "locationsTitle": "Prime Locations",
+      "locationsDesc": "Curated properties in stunning locations from mountains to beaches to cities."
+    },
+    "recent": {
+      "label": "Latest Additions",
+      "title": "Recently Listed",
+      "viewAll": "See All Listings"
+    },
+    "whyUs": {
+      "title": "Why Choose TinyHaven?",
+      "subtitle": "We're dedicated to helping you find the perfect tiny home"
+    },
+    "cta": {
+      "title": "Ready to Start Your Tiny Living Journey?",
+      "subtitle": "Whether you're looking for a weekend retreat or a full-time home, we're here to help you find the perfect tiny house.",
+      "browseAll": "Browse All Homes",
+      "getInTouch": "Get in Touch",
+      "button": "Explore All Homes"
+    }
+  },
+  "testimonials": {
+    "title": "What Our Clients Say",
+    "subtitle": "Real stories from people who found their perfect tiny home through TinyHaven."
+  },
+  "about": {
+    "title": "About TinyHaven",
+    "subtitle": "We're on a mission to make tiny living accessible, beautiful, and sustainable for everyone.",
+    "ourStory": "Our Story",
+    "ourMission": "Our Mission",
+    "ourValues": "Our Values",
+    "meetTeam": "Meet Our Team",
+    "heroLabel": "About TinyHaven",
+    "heroTitle": "We Believe in the Power of",
+    "heroTitleHighlight": "Small Living",
+    "heroDescription": "Founded in 2014, TinyHaven has grown from a small team of dreamers into the nation's leading marketplace for tiny homes. We connect people with beautiful, sustainable small homes that prove bigger isn't always better.",
+    "exploreHomes": "Explore Homes",
+    "getInTouch": "Get in Touch",
+    "homesSold": "Homes Sold",
+    "years": "Years",
+    "missionLabel": "Our Mission",
+    "missionTitle": "Making Tiny Living Accessible to Everyone",
+    "missionDescription": "We envision a world where sustainable, affordable housing is available to all. Our mission is to democratize tiny living by connecting dreamers with the perfect small home that fits their lifestyle, budget, and values.",
+    "valuesLabel": "Our Values",
+    "valuesTitle": "What Drives Us Every Day",
+    "valuesDescription": "Our core values guide everything we do, from selecting homes to serving our customers.",
+    "qualityTitle": "Passion for Quality",
+    "qualityDesc": "We believe everyone deserves a beautiful home. Every tiny house we feature meets our rigorous standards for craftsmanship and livability.",
+    "sustainabilityTitle": "Sustainability First",
+    "sustainabilityDesc": "Environmental responsibility is at our core. We prioritize eco-friendly homes with sustainable features and minimal environmental impact.",
+    "customerTitle": "Customer Focused",
+    "customerDesc": "Your journey matters to us. Our team provides personalized guidance from your first inquiry to move-in day and beyond.",
+    "excellenceTitle": "Trusted Excellence",
+    "excellenceDesc": "With over a decade of experience, we have helped hundreds of families find their perfect tiny home with integrity and care.",
+    "journeyLabel": "Our Journey",
+    "journeyTitle": "A Decade of Growth",
+    "journeyDescription": "From a small startup to the nation's leading tiny home marketplace.",
+    "m2014": "TinyHaven founded in Portland, Oregon",
+    "m2016": "Expanded to 10 states across the US",
+    "m2018": "Reached 100 homes sold milestone",
+    "m2020": "Launched sustainable housing initiative",
+    "m2022": "National expansion to 25+ locations",
+    "m2024": "Celebrating 10 years and 500+ happy homeowners",
+    "teamLabel": "Our Team",
+    "teamTitle": "Meet the People Behind TinyHaven",
+    "teamDescription": "A passionate team dedicated to helping you find your perfect tiny home.",
+    "sarahRole": "Founder & CEO",
+    "sarahBio": "Former architect with a vision for accessible, sustainable housing.",
+    "michaelRole": "Head of Sales",
+    "michaelBio": "Passionate about connecting people with their dream homes.",
+    "emilyRole": "Design Consultant",
+    "emilyBio": "Interior designer specializing in small space optimization.",
+    "davidRole": "Customer Success",
+    "davidBio": "Dedicated to making every customer experience exceptional.",
+    "ctaTitle": "Ready to Find Your Tiny Dream Home?",
+    "ctaSubtitle": "Join thousands of happy homeowners who found their perfect small space through TinyHaven.",
+    "browseHomes": "Browse Homes",
+    "contactUs": "Contact Us"
   },
   "contact": {
     "title": "We'd Love to Hear From You",
@@ -100,39 +239,27 @@
     "sendEmail": "Send Email",
     "getDirections": "Get Directions",
     "preferPhone": "Prefer to Talk on the Phone?",
-    "phoneSubtitle": "Our friendly team is available Monday through Saturday to answer your questions and help you find your perfect tiny home."
-  },
-  "about": {
-    "title": "About TinyHaven",
-    "subtitle": "We're on a mission to make tiny living accessible, beautiful, and sustainable for everyone.",
-    "ourStory": "Our Story",
-    "ourMission": "Our Mission",
-    "ourValues": "Our Values",
-    "meetTeam": "Meet Our Team"
-  },
-  "home": {
-    "hero": {
-      "title": "Find Your Perfect Tiny Home",
-      "subtitle": "Discover beautifully designed tiny houses that combine comfort, sustainability, and style. Your dream of simple living starts here.",
-      "browseHomes": "Browse Homes",
-      "learnMore": "Learn More"
-    },
-    "featured": {
-      "title": "Featured Homes",
-      "subtitle": "Explore our handpicked selection of stunning tiny houses"
-    },
-    "whyUs": {
-      "title": "Why Choose TinyHaven?",
-      "subtitle": "We're dedicated to helping you find the perfect tiny home"
-    },
-    "cta": {
-      "title": "Ready to Find Your Dream Home?",
-      "subtitle": "Browse our collection of beautiful tiny houses and start your journey to simple living.",
-      "button": "Explore All Homes"
-    }
+    "phoneSubtitle": "Our friendly team is available Monday through Saturday to answer your questions and help you find your perfect tiny home.",
+    "phoneDetail1": "1-800-123-4567",
+    "phoneDetail2": "Mon-Fri: 9am-6pm PST",
+    "emailDetail1": "hello@tinyhaven.com",
+    "emailDetail2": "We reply within 24 hours",
+    "officeDetail1": "123 Forest Lane",
+    "officeDetail2": "Portland, Oregon 97201",
+    "hoursDetail1": "Monday - Friday: 9am - 6pm",
+    "hoursDetail2": "Saturday: 10am - 4pm",
+    "faqQ1": "How do I schedule a viewing?",
+    "faqA1": "You can schedule a viewing by filling out the contact form, calling us directly, or using the scheduling button on any house listing page.",
+    "faqQ2": "Do you offer financing options?",
+    "faqA2": "Yes, we work with several lending partners who specialize in tiny home financing. Contact us to learn about available options.",
+    "faqQ3": "Can I customize a tiny home?",
+    "faqA3": "Many of our builders offer customization options. Let us know your preferences and we will connect you with the right builder.",
+    "faqQ4": "What areas do you serve?",
+    "faqA4": "We have listings across 25+ states in the US. Our team can help you find homes in your desired location.",
+    "callPhone": "Call 1-800-123-4567"
   },
   "footer": {
-    "description": "Find your perfect tiny home. We connect dreamers with beautiful, sustainable tiny houses across the country.",
+    "description": "Discover the perfect tiny house for your lifestyle. We connect dreamers with beautiful, sustainable small homes across the country.",
     "quickLinks": "Quick Links",
     "support": "Support",
     "helpCenter": "Help Center",
@@ -144,7 +271,61 @@
     "newsletterDesc": "Subscribe for the latest tiny home listings and tips.",
     "subscribe": "Subscribe",
     "emailPlaceholder": "Enter your email",
-    "allRightsReserved": "All rights reserved."
+    "allRightsReserved": "All rights reserved.",
+    "explore": "Explore",
+    "company": "Company",
+    "resources": "Resources",
+    "allHouses": "All Houses",
+    "featuredHomes": "Featured Homes",
+    "cabins": "Cabins",
+    "containerHomes": "Container Homes",
+    "aFrames": "A-Frames",
+    "aboutUs": "About Us",
+    "contact": "Contact",
+    "careers": "Careers",
+    "press": "Press",
+    "tinyLivingGuide": "Tiny Living Guide",
+    "financingOptions": "Financing Options",
+    "faq": "FAQ",
+    "blog": "Blog"
+  },
+  "form": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "fullName": "Full Name",
+    "email": "Email",
+    "emailAddress": "Email Address",
+    "phone": "Phone",
+    "phoneNumber": "Phone Number",
+    "message": "Message",
+    "subject": "Subject",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "required": "Required",
+    "optional": "optional",
+    "selectSubject": "Select a subject",
+    "inquiryAbout": "Inquiry about",
+    "successMessage": "Thank you for your message! We'll get back to you within 24 hours.",
+    "responseNote": "We typically respond within 24 hours. Your information is secure and will never be shared.",
+    "generalInquiry": "General Inquiry",
+    "scheduleViewing": "Schedule a Viewing",
+    "pricingQuestion": "Pricing Question",
+    "financingOptions": "Financing Options",
+    "customBuild": "Custom Build Request",
+    "other": "Other",
+    "nameRequired": "Name is required",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email",
+    "phoneInvalid": "Please enter a valid phone number",
+    "subjectRequired": "Subject is required",
+    "messageRequired": "Message is required",
+    "messageMinLength": "Message must be at least 10 characters",
+    "placeholder": {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "(555) 123-4567",
+      "message": "Tell us about what you're looking for..."
+    }
   },
   "common": {
     "loading": "Loading...",
@@ -158,16 +339,5 @@
     "viewAll": "View All",
     "readMore": "Read More",
     "learnMore": "Learn More"
-  },
-  "form": {
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "email": "Email",
-    "phone": "Phone",
-    "message": "Message",
-    "subject": "Subject",
-    "send": "Send Message",
-    "required": "Required",
-    "optional": "Optional"
   }
 }
