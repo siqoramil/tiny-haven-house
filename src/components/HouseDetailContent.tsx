@@ -18,6 +18,7 @@ import {
 import ImageGallery from '@/components/ImageGallery'
 import ContactForm from '@/components/ContactForm'
 import HouseCard from '@/components/HouseCard'
+import GoogleMap from '@/components/GoogleMap'
 import { formatPrice } from '@/lib/utils'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useFavorites } from '@/contexts/FavoritesContext'
@@ -246,22 +247,20 @@ export default function HouseDetailContent({ house, relatedHouses }: HouseDetail
               </div>
             </div>
 
-            {/* Location Map Placeholder */}
+            {/* Location Map */}
             <div>
               <h2 className="text-2xl font-display font-bold text-neutral-900 dark:text-white mb-4">
                 {t('houseDetail.location')}
               </h2>
-              <div className="bg-neutral-100 dark:bg-neutral-800 rounded-2xl aspect-[16/9] flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 text-neutral-400 mx-auto mb-3" />
-                  <p className="text-neutral-600 dark:text-neutral-300 font-medium">
-                    {house.location.city}, {house.location.state}
-                  </p>
-                  <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
-                    {t('houseDetail.mapNote')}
-                  </p>
-                </div>
+              <div className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400 mb-4">
+                <MapPin className="w-5 h-5" />
+                <span>{house.location.city}, {house.location.state}</span>
               </div>
+              <GoogleMap
+                lat={house.location.coordinates.lat}
+                lng={house.location.coordinates.lng}
+                title={`${house.title} - ${house.location.city}, ${house.location.state}`}
+              />
             </div>
           </div>
 
