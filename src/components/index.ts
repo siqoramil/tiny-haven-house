@@ -1,8 +1,0 @@
-export { default as Header } from './Header'
-export { default as Footer } from './Footer'
-export { default as HouseCard } from './HouseCard'
-export { default as HouseFilters } from './HouseFilters'
-export { default as ContactForm } from './ContactForm'
-export { default as ImageGallery } from './ImageGallery'
-export { default as Testimonials } from './Testimonials'
-export { default as AboutContent } from './AboutContent'
