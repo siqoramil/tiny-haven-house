@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import { Sun, Moon, Monitor, Check } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { Check, Monitor, Moon, Sun } from 'lucide-react'
 import { useTheme } from '../model/theme-context'
 import { useLanguage } from '@/shared/i18n'
 import { cn } from '@/shared/lib'
@@ -13,113 +13,111 @@ const themeOptions = [
 ] as const
 
 interface ThemeToggleProps {
-  useLightStyle?: boolean
+  /** True while the trigger sits on a dark hero rather than the header bar. */
+  onGlass?: boolean
 }
 
-export default function ThemeToggle({ useLightStyle = true }: ThemeToggleProps) {
+export default function ThemeToggle({ onGlass = false }: ThemeToggleProps) {
   const { theme, setTheme, resolvedTheme, mounted } = useTheme()
   const { t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    if (!isOpen) return
 
-  // Until the stored preference is read, render what the server rendered.
-  // Swapping the icon after mount is a one-element change; gating the whole
-  // page on it (the old behaviour) cost a blank screen until hydration.
+    const handlePointerDown = (event: MouseEvent) => {
+      if (!dropdownRef.current?.contains(event.target as Node)) setIsOpen(false)
+    }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false)
+    }
+
+    document.addEventListener('mousedown', handlePointerDown)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen])
+
+  // Until the stored preference is read the server markup is what's on screen,
+  // so keep its icon. Swapping one glyph after mount beats gating the page.
   const CurrentIcon = mounted && resolvedTheme === 'dark' ? Moon : Sun
 
   return (
     <div ref={dropdownRef} className="relative">
       <button
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className={cn(
-          'p-2.5 rounded-xl transition-all duration-200',
-          'border-2',
-          isOpen
-            ? 'bg-white dark:bg-neutral-800 border-primary-500 ring-4 ring-primary-100 dark:ring-primary-900/30 shadow-lg'
-            : useLightStyle
-              ? 'bg-neutral-100 dark:bg-neutral-800 border-transparent hover:bg-neutral-200 dark:hover:bg-neutral-700'
-              : 'bg-white/20 backdrop-blur-sm border-transparent hover:bg-white/30'
-        )}
+        onClick={() => setIsOpen((open) => !open)}
         aria-label={t('theme.title')}
+        aria-expanded={isOpen}
+        aria-haspopup="menu"
+        className={cn(
+          'grid h-10 w-10 place-items-center rounded-xl transition-colors',
+          onGlass
+            ? 'bg-white/15 text-white ring-1 ring-inset ring-white/20 backdrop-blur-sm hover:bg-white/25'
+            : isOpen
+              ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/50 dark:text-primary-200'
+              : 'bg-sunken text-muted hover:bg-line hover:text-ink',
+        )}
       >
-        <CurrentIcon className={cn(
-          'w-5 h-5 transition-colors',
-          isOpen
-            ? 'text-primary-600 dark:text-primary-400'
-            : useLightStyle
-              ? 'text-neutral-600 dark:text-neutral-300'
-              : 'text-white'
-        )} />
+        <CurrentIcon className="h-[18px] w-[18px]" />
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-56 bg-white dark:bg-neutral-800 rounded-2xl shadow-2xl border border-neutral-100 dark:border-neutral-700 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-          <div className="p-2">
-            <p className="px-3 py-2 text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-              {t('theme.title')}
-            </p>
-            {themeOptions.map((themeOption) => {
-              const isSelected = theme === themeOption.value
-              const Icon = themeOption.icon
-              return (
-                <button
-                  key={themeOption.value}
-                  type="button"
-                  onClick={() => {
-                    setTheme(themeOption.value)
-                    setIsOpen(false)
-                  }}
+        <div
+          role="menu"
+          className="panel absolute right-0 top-full z-50 mt-2 w-60 animate-pop-in overflow-hidden p-2"
+        >
+          <p className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-subtle">
+            {t('theme.title')}
+          </p>
+          {themeOptions.map((option) => {
+            const selected = theme === option.value
+            const Icon = option.icon
+            return (
+              <button
+                key={option.value}
+                type="button"
+                role="menuitemradio"
+                aria-checked={selected}
+                onClick={() => {
+                  setTheme(option.value)
+                  setIsOpen(false)
+                }}
+                className={cn(
+                  'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors',
+                  selected ? 'bg-primary-50 dark:bg-primary-900/40' : 'hover:bg-sunken',
+                )}
+              >
+                <span
                   className={cn(
-                    'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all',
-                    isSelected
-                      ? 'bg-primary-50 dark:bg-primary-900/30'
-                      : 'hover:bg-neutral-50 dark:hover:bg-neutral-700/50'
+                    'grid h-9 w-9 place-items-center rounded-lg',
+                    selected
+                      ? 'bg-primary-100 text-primary-700 dark:bg-primary-800 dark:text-primary-200'
+                      : 'bg-sunken text-subtle',
                   )}
                 >
-                  <div className={cn(
-                    'w-9 h-9 rounded-lg flex items-center justify-center transition-colors',
-                    isSelected
-                      ? 'bg-primary-100 dark:bg-primary-800'
-                      : 'bg-neutral-100 dark:bg-neutral-700'
-                  )}>
-                    <Icon className={cn(
-                      'w-4.5 h-4.5',
-                      isSelected
-                        ? 'text-primary-600 dark:text-primary-400'
-                        : 'text-neutral-500 dark:text-neutral-400'
-                    )} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className={cn(
-                      'font-medium block text-sm',
-                      isSelected
-                        ? 'text-primary-700 dark:text-primary-300'
-                        : 'text-neutral-700 dark:text-neutral-200'
-                    )}>
-                      {t(themeOption.labelKey)}
-                    </span>
-                    <span className="text-xs text-neutral-500 dark:text-neutral-400">
-                      {t(themeOption.descKey)}
-                    </span>
-                  </div>
-                  {isSelected && (
-                    <Check className="w-5 h-5 text-primary-600 dark:text-primary-400 flex-shrink-0" />
-                  )}
-                </button>
-              )
-            })}
-          </div>
+                  <Icon className="h-[18px] w-[18px]" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span
+                    className={cn(
+                      'block text-sm font-medium',
+                      selected ? 'text-primary-800 dark:text-primary-200' : 'text-ink',
+                    )}
+                  >
+                    {t(option.labelKey)}
+                  </span>
+                  <span className="block truncate text-xs text-subtle">{t(option.descKey)}</span>
+                </span>
+                {selected && (
+                  <Check className="h-4 w-4 shrink-0 text-primary-600 dark:text-primary-300" />
+                )}
+              </button>
+            )
+          })}
         </div>
       )}
     </div>

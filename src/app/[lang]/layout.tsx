@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Inter, Fraunces } from 'next/font/google'
 import { Header } from '@/widgets/header'
 import { Footer } from '@/widgets/footer'
 import {
@@ -16,17 +16,20 @@ import '../styles/globals.css'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tinyhaven.com'
 
-// Font configuration
-const inter = Inter({
-  subsets: ['latin'],
+// Latin-Extended and Cyrillic are both required: the UI ships in en / ru / uz.
+const sans = Inter({
+  subsets: ['latin', 'latin-ext', 'cyrillic'],
   display: 'swap',
-  variable: '--font-inter',
+  variable: '--font-sans',
 })
 
-const playfair = Playfair_Display({
+// Fraunces is the display voice — a warm, slightly quirky serif that suits
+// hand-built homes far better than a high-contrast Didone would.
+const display = Fraunces({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-playfair',
+  variable: '--font-display',
+  axes: ['SOFT', 'WONK', 'opsz'],
 })
 
 // Prerender one tree per language
@@ -111,13 +114,16 @@ export async function generateMetadata({
   }
 }
 
-// Script to prevent flash of wrong theme
+// Runs before first paint so the correct palette is on <html> already —
+// without it every dark-mode visitor gets a white flash. Wrapped in try/catch
+// because localStorage throws outright when cookies are blocked.
 const themeScript = `
   (function() {
-    const theme = localStorage.getItem('theme') || 'system';
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    const resolved = theme === 'system' ? systemTheme : theme;
-    document.documentElement.classList.add(resolved);
+    try {
+      var stored = localStorage.getItem('theme') || 'system';
+      var system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.classList.add(stored === 'system' ? system : stored);
+    } catch (e) {}
   })();
 `;
 
@@ -136,25 +142,28 @@ export default async function RootLayout({
   const t = createTranslator(dictionary)
 
   return (
-    <html lang={language} className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
+    <html
+      lang={language}
+      className={`${sans.variable} ${display.variable}`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="font-sans antialiased bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 transition-colors">
+      <body className="antialiased">
         <AppProviders language={language} dictionary={dictionary}>
           {/* Skip to content link for accessibility */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-600 focus:text-white focus:rounded-lg"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-primary-600 focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
           >
             {t('common.skipToContent')}
           </a>
 
           <Header />
 
-          <main id="main-content" className="min-h-screen">
-            {children}
-          </main>
+          <main id="main-content">{children}</main>
 
           <Footer />
         </AppProviders>

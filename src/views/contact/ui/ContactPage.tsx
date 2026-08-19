@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Clock, MessageCircle, Calendar } from 'lucide-react'
+import { Calendar, Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
 import { ContactForm } from '@/features/contact-form'
 import { createTranslator, type Language } from '@/shared/i18n'
 import { getDictionary } from '@/shared/i18n/server'
@@ -39,184 +39,157 @@ export default async function ContactPage({ lang }: { lang: Language }) {
       title: t('contact.scheduleViewing'),
       description: t('contact.scheduleDesc'),
       cta: t('contact.bookNow'),
+      href: 'tel:+18001234567',
     },
     {
       icon: MessageCircle,
       title: t('contact.liveChat'),
       description: t('contact.liveChatDesc'),
       cta: t('contact.startChat'),
+      href: 'mailto:hello@tinyhaven.com',
     },
   ]
 
   const faqs = [
-    {
-      question: t('contact.faqQ1'),
-      answer: t('contact.faqA1'),
-    },
-    {
-      question: t('contact.faqQ2'),
-      answer: t('contact.faqA2'),
-    },
-    {
-      question: t('contact.faqQ3'),
-      answer: t('contact.faqA3'),
-    },
-    {
-      question: t('contact.faqQ4'),
-      answer: t('contact.faqA4'),
-    },
+    { question: t('contact.faqQ1'), answer: t('contact.faqA1') },
+    { question: t('contact.faqQ2'), answer: t('contact.faqA2') },
+    { question: t('contact.faqQ3'), answer: t('contact.faqA3') },
+    { question: t('contact.faqQ4'), answer: t('contact.faqA4') },
   ]
 
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-900 pt-20">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-primary-50 to-white dark:from-neutral-800 dark:to-neutral-900 py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-primary-600 dark:text-primary-400 font-medium mb-4 block">{t('contact.getInTouch')}</span>
-            <h1 className="text-4xl lg:text-5xl font-display font-bold text-neutral-900 dark:text-white mb-6">
-              {t('contact.title')}
-            </h1>
-            <p className="text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed">
-              {t('contact.subtitle')}
-            </p>
+    <div className="pt-16 lg:pt-20">
+      {/* ---------------------------------------------------------------- Hero */}
+      <section className="bg-gradient-to-b from-primary-50 to-canvas py-16 dark:from-stone-900 dark:to-canvas lg:py-20">
+        <div className="shell-narrow text-center">
+          <span className="eyebrow">{t('contact.getInTouch')}</span>
+          <h1 className="font-display text-display-lg font-semibold">{t('contact.title')}</h1>
+          <p className="lede mt-5">{t('contact.subtitle')}</p>
+        </div>
+      </section>
+
+      {/* --------------------------------------------------------- Info cards */}
+      {/* Pulled up into the hero's foot so the two bands read as one unit
+          instead of leaving the dead white gap the old spacing produced. */}
+      <div className="shell -mt-10 lg:-mt-12">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {contactInfo.map((item) => (
+            <div key={item.title} className="card flex h-full flex-col p-6">
+              <span className="icon-tile mb-5 h-11 w-11">
+                <item.icon className="h-5 w-5" />
+              </span>
+              <h2 className="mb-2 font-semibold">{item.title}</h2>
+              <div className="space-y-0.5">
+                {item.details.map((detail) => (
+                  <p key={detail} className="text-sm text-muted">
+                    {detail}
+                  </p>
+                ))}
+              </div>
+              {item.action && (
+                <a
+                  href={item.action.href}
+                  className="mt-auto pt-4 text-sm font-semibold text-primary-700 transition-colors hover:text-primary-800 dark:text-primary-300 dark:hover:text-primary-200"
+                >
+                  {item.action.label} &rarr;
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* --------------------------------------------------------- Form + side */}
+      <section className="section">
+        <div className="shell grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16">
+          <div>
+            <h2 className="font-display text-display-sm font-semibold">
+              {t('contact.sendMessage')}
+            </h2>
+            <p className="mb-8 mt-2 text-muted">{t('contact.formSubtitle')}</p>
+            <ContactForm />
+          </div>
+
+          <div className="space-y-10">
+            <div>
+              <h2 className="mb-5 text-lg font-semibold">{t('contact.quickActions')}</h2>
+              <div className="space-y-3">
+                {quickActions.map((action) => (
+                  <a
+                    key={action.title}
+                    href={action.href}
+                    className="group flex items-start gap-4 rounded-2xl border border-line bg-sunken p-4 transition-colors hover:border-primary-300 hover:bg-surface dark:hover:border-primary-700"
+                  >
+                    <span className="icon-tile h-10 w-10 rounded-xl">
+                      <action.icon className="h-[18px] w-[18px]" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-semibold text-ink">{action.title}</span>
+                      <span className="mt-0.5 block text-sm text-muted">{action.description}</span>
+                    </span>
+                    <span className="shrink-0 self-center text-sm font-semibold text-primary-700 transition-transform group-hover:translate-x-0.5 dark:text-primary-300">
+                      &rarr;
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h2 className="mb-5 text-lg font-semibold">{t('contact.ourLocation')}</h2>
+              <div className="aspect-[4/3] overflow-hidden rounded-3xl border border-line bg-sunken">
+                <iframe
+                  src="https://www.google.com/maps?q=45.5152,-122.6784&z=13&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={t('contact.ourLocation')}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Info Cards */}
-      <section className="py-12 bg-white dark:bg-neutral-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {contactInfo.map((item, index) => (
-              <div
-                key={index}
-                className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl p-6 hover:shadow-lg transition-shadow"
-              >
-                <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/50 rounded-xl flex items-center justify-center mb-4">
-                  <item.icon className="w-6 h-6 text-primary-600 dark:text-primary-400" />
-                </div>
-                <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-2">{item.title}</h3>
-                <div className="space-y-1 mb-4">
-                  {item.details.map((detail, i) => (
-                    <p key={i} className="text-neutral-600 dark:text-neutral-400 text-sm">
-                      {detail}
-                    </p>
-                  ))}
-                </div>
-                {item.action && (
-                  <a
-                    href={item.action.href}
-                    className="text-primary-600 dark:text-primary-400 font-medium text-sm hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+      {/* ----------------------------------------------------------------- FAQ */}
+      <section className="section bg-sunken">
+        <div className="shell">
+          <div className="mx-auto mb-12 max-w-2xl text-center">
+            <h2 className="font-display text-display-md font-semibold">{t('contact.faq')}</h2>
+            <p className="lede mt-4">{t('contact.faqSubtitle')}</p>
+          </div>
+
+          <div className="mx-auto max-w-3xl space-y-3">
+            {faqs.map((faq) => (
+              <details key={faq.question} className="card group p-0">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-semibold text-ink [&::-webkit-details-marker]:hidden">
+                  {faq.question}
+                  <span
+                    className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-sunken text-lg leading-none text-subtle transition-transform group-open:rotate-45"
+                    aria-hidden
                   >
-                    {item.action.label} →
-                  </a>
-                )}
-              </div>
+                    +
+                  </span>
+                </summary>
+                <p className="px-5 pb-5 text-sm leading-relaxed text-muted">{faq.answer}</p>
+              </details>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Main Contact Section */}
-      <section className="py-16 lg:py-24 bg-white dark:bg-neutral-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Contact Form */}
-            <div>
-              <h2 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 dark:text-white mb-2">
-                {t('contact.sendMessage')}
-              </h2>
-              <p className="text-neutral-600 dark:text-neutral-400 mb-8">
-                {t('contact.formSubtitle')}
-              </p>
-              <ContactForm />
-            </div>
-
-            {/* Side Content */}
-            <div className="space-y-8">
-              {/* Quick Actions */}
-              <div>
-                <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-6">{t('contact.quickActions')}</h3>
-                <div className="space-y-4">
-                  {quickActions.map((action, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start gap-4 p-4 bg-neutral-50 dark:bg-neutral-800 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors cursor-pointer"
-                    >
-                      <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900/50 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <action.icon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-neutral-900 dark:text-white">{action.title}</h4>
-                        <p className="text-sm text-neutral-600 dark:text-neutral-400">{action.description}</p>
-                      </div>
-                      <span className="text-primary-600 dark:text-primary-400 font-medium text-sm">{action.cta} →</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Google Maps */}
-              <div>
-                <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-6">{t('contact.ourLocation')}</h3>
-                <div className="rounded-2xl overflow-hidden aspect-[4/3]">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.2096789456!2d-122.6789!3d45.5152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54950a0027e0b8c5%3A0x6c8e5c0eb0a6c8b5!2sPortland%2C%20OR%2097201!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="TinyHaven Office Location"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-16 lg:py-24 bg-neutral-50 dark:bg-neutral-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="text-2xl lg:text-3xl font-display font-bold text-neutral-900 dark:text-white mb-4">
-              {t('contact.faq')}
-            </h2>
-            <p className="text-neutral-600 dark:text-neutral-400">
-              {t('contact.faqSubtitle')}
-            </p>
-          </div>
-
-          <div className="max-w-3xl mx-auto">
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="bg-white dark:bg-neutral-900 rounded-xl p-6 shadow-sm">
-                  <h3 className="font-semibold text-neutral-900 dark:text-white mb-2">{faq.question}</h3>
-                  <p className="text-neutral-600 dark:text-neutral-400">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 lg:py-20 bg-neutral-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl lg:text-3xl font-display font-bold mb-4">
+      {/* ----------------------------------------------------------------- CTA */}
+      <section className="section-tight bg-stone-950 text-center text-stone-400">
+        <div className="shell-narrow">
+          <h2 className="font-display text-display-sm font-semibold text-white">
             {t('contact.preferPhone')}
           </h2>
-          <p className="text-neutral-400 mb-8 max-w-xl mx-auto">
-            {t('contact.phoneSubtitle')}
-          </p>
-          <a
-            href="tel:+18001234567"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all"
-          >
-            <Phone className="w-5 h-5" />
+          <p className="mx-auto mt-4 max-w-lg">{t('contact.phoneSubtitle')}</p>
+          <a href="tel:+18001234567" className="btn btn-lg btn-primary mt-8">
+            <Phone className="h-[18px] w-[18px]" />
             {t('contact.callPhone')}
           </a>
         </div>

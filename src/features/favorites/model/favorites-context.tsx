@@ -37,14 +37,24 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   // Load from localStorage
   useEffect(() => {
     const saved = localStorage.getItem('favorites')
+    let storedItems: FavoriteItem[] = []
+
     if (saved) {
       try {
-        setItems(JSON.parse(saved))
+        storedItems = JSON.parse(saved)
       } catch {
         console.error('Failed to parse favorites from localStorage')
       }
     }
-    setMounted(true)
+
+    // Restore persisted state after hydration so the server and first client
+    // render both start from the same empty collection.
+    const frame = requestAnimationFrame(() => {
+      setItems(storedItems)
+      setMounted(true)
+    })
+
+    return () => cancelAnimationFrame(frame)
   }, [])
 
   // Save to localStorage

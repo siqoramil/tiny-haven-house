@@ -1,9 +1,8 @@
 'use client'
 
-import { LocaleLink as Link } from '@/shared/i18n'
-import { Home, Mail, Phone, MapPin } from 'lucide-react'
-import { Facebook, Twitter, Instagram, Youtube } from '@/shared/ui'
-import { useLanguage } from '@/shared/i18n'
+import { Mail, MapPin, Phone } from 'lucide-react'
+import { Facebook, Instagram, Twitter, Youtube } from '@/shared/ui'
+import { LocaleLink as Link, useLanguage } from '@/shared/i18n'
 
 const socialLinks = [
   { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
@@ -15,149 +14,131 @@ const socialLinks = [
 export default function Footer() {
   const { t } = useLanguage()
 
-  const footerLinks = {
-    explore: [
-      { label: t('footer.allHouses'), href: '/houses' },
-      { label: t('footer.featuredHomes'), href: '/houses?featured=true' },
-      { label: t('footer.cabins'), href: '/houses?type=cabin' },
-      { label: t('footer.containerHomes'), href: '/houses?type=container' },
-      { label: t('footer.aFrames'), href: '/houses?type=a-frame' },
-    ],
-    company: [
-      { label: t('footer.aboutUs'), href: '/about' },
-      { label: t('footer.contact'), href: '/contact' },
-      { label: t('footer.careers'), href: '/careers' },
-      { label: t('footer.press'), href: '/press' },
-    ],
-    resources: [
-      { label: t('footer.tinyLivingGuide'), href: '/guides/tiny-living' },
-      { label: t('footer.financingOptions'), href: '/financing' },
-      { label: t('footer.faq'), href: '/faq' },
-      { label: t('footer.blog'), href: '/blog' },
-    ],
-  }
+  const columns = [
+    {
+      heading: t('footer.explore'),
+      links: [
+        { label: t('footer.allHouses'), href: '/houses' },
+        { label: t('footer.featuredHomes'), href: '/houses?featured=true' },
+        { label: t('footer.cabins'), href: '/houses?type=cabin' },
+        { label: t('footer.containerHomes'), href: '/houses?type=container' },
+        { label: t('footer.aFrames'), href: '/houses?type=a-frame' },
+      ],
+    },
+    {
+      heading: t('footer.company'),
+      links: [
+        { label: t('footer.aboutUs'), href: '/about' },
+        { label: t('footer.contact'), href: '/contact' },
+        { label: t('footer.careers'), href: '/careers' },
+        { label: t('footer.press'), href: '/press' },
+      ],
+    },
+    {
+      heading: t('footer.resources'),
+      links: [
+        { label: t('footer.tinyLivingGuide'), href: '/guides/tiny-living' },
+        { label: t('footer.financingOptions'), href: '/financing' },
+        { label: t('footer.faq'), href: '/faq' },
+        { label: t('footer.blog'), href: '/blog' },
+      ],
+    },
+  ]
+
+  const contacts = [
+    { icon: Mail, label: 'hello@tinyhaven.com', href: 'mailto:hello@tinyhaven.com' },
+    { icon: Phone, label: '1-800-123-4567', href: 'tel:+18001234567' },
+    { icon: MapPin, label: 'Portland, Oregon, USA', href: null },
+  ]
 
   return (
-    <footer className="bg-neutral-900 text-white">
-      {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
-          {/* Brand Section */}
+    // The footer keeps one fixed dark identity in both themes — it is the
+    // page's baseline, not another surface that has to flip with the palette.
+    <footer className="bg-stone-950 text-stone-400">
+      <div className="shell py-16 lg:py-20">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5 lg:gap-8">
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="p-2 bg-primary-600 rounded-lg">
-                <Home className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-display font-bold">TinyHaven</span>
+            <Link href="/" className="inline-flex items-center gap-2.5">
+              <span
+                className="grid h-9 w-9 place-items-center rounded-xl bg-primary-500 font-display text-lg font-semibold text-white"
+                aria-hidden
+              >
+                t
+              </span>
+              <span className="font-display text-xl font-semibold text-white">TinyHaven</span>
             </Link>
-            <p className="text-neutral-400 text-sm leading-relaxed mb-6 max-w-sm">
-              {t('footer.description')}
-            </p>
 
-            {/* Contact Info */}
-            <div className="space-y-3">
-              <a href="mailto:hello@tinyhaven.com" className="flex items-center gap-3 text-neutral-400 hover:text-white transition-colors text-sm">
-                <Mail className="w-4 h-4" />
-                hello@tinyhaven.com
-              </a>
-              <a href="tel:+18001234567" className="flex items-center gap-3 text-neutral-400 hover:text-white transition-colors text-sm">
-                <Phone className="w-4 h-4" />
-                1-800-123-4567
-              </a>
-              <div className="flex items-center gap-3 text-neutral-400 text-sm">
-                <MapPin className="w-4 h-4" />
-                Portland, Oregon, USA
-              </div>
-            </div>
-          </div>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed">{t('footer.description')}</p>
 
-          {/* Explore Links */}
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">{t('footer.explore')}</h3>
-            <ul className="space-y-3">
-              {footerLinks.explore.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-neutral-400 hover:text-white transition-colors text-sm"
-                  >
-                    {link.label}
-                  </Link>
+            <ul className="mt-7 space-y-3">
+              {contacts.map((contact) => (
+                <li key={contact.label}>
+                  {contact.href ? (
+                    <a
+                      href={contact.href}
+                      className="inline-flex items-center gap-3 text-sm transition-colors hover:text-white"
+                    >
+                      <contact.icon className="h-4 w-4 shrink-0 text-primary-400" />
+                      {contact.label}
+                    </a>
+                  ) : (
+                    <span className="inline-flex items-center gap-3 text-sm">
+                      <contact.icon className="h-4 w-4 shrink-0 text-primary-400" />
+                      {contact.label}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Company Links */}
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">{t('footer.company')}</h3>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-neutral-400 hover:text-white transition-colors text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources Links */}
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">{t('footer.resources')}</h3>
-            <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-neutral-400 hover:text-white transition-colors text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {columns.map((column) => (
+            <nav key={column.heading} aria-label={column.heading}>
+              <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-white">
+                {column.heading}
+              </h2>
+              <ul className="space-y-3">
+                {column.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-sm transition-colors hover:text-white">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-neutral-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {/* Copyright */}
-            <p className="text-neutral-500 text-sm">
-              &copy; {new Date().getFullYear()} TinyHaven. {t('footer.allRightsReserved')}
-            </p>
+      <div className="border-t border-white/10">
+        <div className="shell flex flex-col items-center justify-between gap-6 py-6 md:flex-row">
+          <p className="order-3 text-sm text-stone-500 md:order-1">
+            &copy; {new Date().getFullYear()} TinyHaven. {t('footer.allRightsReserved')}
+          </p>
 
-            {/* Social Links */}
-            <div className="flex items-center gap-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 text-neutral-500 hover:text-white hover:bg-neutral-800 rounded-lg transition-all"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5" />
-                </a>
-              ))}
-            </div>
+          <div className="order-1 flex items-center gap-1 md:order-2">
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="grid h-10 w-10 place-items-center rounded-full text-stone-500 transition-colors hover:bg-white/10 hover:text-white"
+              >
+                <social.icon className="h-[18px] w-[18px]" />
+              </a>
+            ))}
+          </div>
 
-            {/* Legal Links */}
-            <div className="flex items-center gap-6">
-              <Link href="/privacy" className="text-neutral-500 hover:text-white text-sm transition-colors">
-                {t('footer.privacyPolicy')}
-              </Link>
-              <Link href="/terms" className="text-neutral-500 hover:text-white text-sm transition-colors">
-                {t('footer.termsOfService')}
-              </Link>
-            </div>
+          <div className="order-2 flex items-center gap-6 md:order-3">
+            <Link href="/privacy" className="text-sm text-stone-500 transition-colors hover:text-white">
+              {t('footer.privacyPolicy')}
+            </Link>
+            <Link href="/terms" className="text-sm text-stone-500 transition-colors hover:text-white">
+              {t('footer.termsOfService')}
+            </Link>
           </div>
         </div>
       </div>

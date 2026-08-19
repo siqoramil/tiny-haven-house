@@ -1,6 +1,28 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { isLanguage } from '@/shared/i18n'
+import { createTranslator, isLanguage } from '@/shared/i18n'
+import { getDictionary } from '@/shared/i18n/server'
 import { ContactPage } from '@/views/contact'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>
+}): Promise<Metadata> {
+  const { lang } = await params
+  if (!isLanguage(lang)) return {}
+
+  const t = createTranslator(await getDictionary(lang))
+  const title = t('contact.title')
+  const description = t('contact.subtitle')
+
+  return {
+    title,
+    description,
+    openGraph: { title: `${title} | TinyHaven`, description, images: [] },
+    twitter: { title: `${title} | TinyHaven`, description, images: [] },
+  }
+}
 
 export default async function ContactRoute({
   params,

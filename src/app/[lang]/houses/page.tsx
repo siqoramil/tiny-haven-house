@@ -13,10 +13,22 @@ export async function generateMetadata({
   const { lang } = await params
   if (!isLanguage(lang)) return {}
   const t = createTranslator(await getDictionary(lang))
+  const title = t('houses.title')
+  const description = t('houses.subtitle')
 
   return {
-    title: t('houses.title'),
-    description: t('houses.subtitle'),
+    title,
+    description,
+    openGraph: {
+      title: `${title} | TinyHaven`,
+      description,
+      images: [],
+    },
+    twitter: {
+      title: `${title} | TinyHaven`,
+      description,
+      images: [],
+    },
   }
 }
 

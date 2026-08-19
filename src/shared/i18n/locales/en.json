@@ -9,7 +9,8 @@
   "header": {
     "search": "Search",
     "favorites": "Favorites",
-    "language": "Language"
+    "language": "Language",
+    "menu": "Menu"
   },
   "favorites": {
     "title": "Favorites",
@@ -44,7 +45,11 @@
       "sortBy": "Sort by",
       "newestFirst": "Newest First",
       "priceLowHigh": "Price: Low to High",
-      "priceHighLow": "Price: High to Low"
+      "priceHighLow": "Price: High to Low",
+      "searchLocation": "Search a location…",
+      "noLocations": "No matching locations",
+      "min": "Min",
+      "max": "Max"
     },
     "types": {
       "cabin": "Cabin",
@@ -58,6 +63,11 @@
       "onePlus": "1+",
       "twoPlus": "2+",
       "threePlus": "3+"
+    },
+    "view": {
+      "label": "View",
+      "grid": "Grid view",
+      "list": "List view"
     }
   },
   "houseDetail": {
@@ -146,7 +156,9 @@
   },
   "testimonials": {
     "title": "What Our Clients Say",
-    "subtitle": "Real stories from people who found their perfect tiny home through TinyHaven."
+    "subtitle": "Real stories from people who found their perfect tiny home through TinyHaven.",
+    "previous": "Previous review",
+    "next": "Next review"
   },
   "about": {
     "title": "About TinyHaven",
@@ -337,5 +349,10 @@
     "description": "Sorry, we couldn't find the page you're looking for. It may have been moved or no longer exists.",
     "backHome": "Back to Home",
     "browse": "Browse Houses"
+  },
+  "gallery": {
+    "previous": "Previous image",
+    "next": "Next image",
+    "viewFullSize": "View full size"
   }
 }

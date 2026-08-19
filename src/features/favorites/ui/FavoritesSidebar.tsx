@@ -2,11 +2,10 @@
 
 import { useEffect } from 'react'
 import Image from 'next/image'
-import { LocaleLink as Link } from '@/shared/i18n'
-import { X, Heart, Trash2, MapPin } from 'lucide-react'
+import { Heart, MapPin, Trash2, X } from 'lucide-react'
 import { useFavorites } from '../model/favorites-context'
-import { useLanguage } from '@/shared/i18n'
-import { cn } from '@/shared/lib'
+import { cn, formatPrice } from '@/shared/lib'
+import { LocaleLink as Link, useLanguage } from '@/shared/i18n'
 
 interface FavoritesSidebarProps {
   isOpen: boolean
@@ -17,137 +16,113 @@ export default function FavoritesSidebar({ isOpen, onClose }: FavoritesSidebarPr
   const { items, removeFromFavorites } = useFavorites()
   const { t } = useLanguage()
 
-  // Prevent body scroll when sidebar is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [isOpen])
+    if (!isOpen) return
 
-  // Close on escape key
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
     }
     document.addEventListener('keydown', handleEscape)
-    return () => document.removeEventListener('keydown', handleEscape)
-  }, [onClose])
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits: 0,
-    }).format(price)
-  }
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [isOpen, onClose])
 
   return (
     <>
-      {/* Backdrop */}
       <div
-        className={cn(
-          'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 transition-opacity duration-300',
-          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        )}
         onClick={onClose}
+        aria-hidden
+        className={cn(
+          'fixed inset-0 z-50 bg-stone-950/50 backdrop-blur-sm transition-opacity duration-300',
+          isOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
+        )}
       />
 
-      {/* Sidebar */}
-      <div
+      <aside
+        role="dialog"
+        aria-modal={isOpen}
+        aria-label={t('favorites.title')}
+        // Kept mounted for the slide transition; hidden from the a11y tree and
+        // from tab order while closed so it cannot trap focus off-screen.
+        aria-hidden={!isOpen}
+        inert={!isOpen}
         className={cn(
-          'fixed top-0 right-0 h-full w-full sm:w-96 bg-white dark:bg-neutral-900 shadow-2xl z-50 transition-transform duration-300 ease-out',
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+          'fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col border-l border-line bg-surface shadow-pop transition-transform duration-300 ease-out',
+          isOpen ? 'translate-x-0' : 'translate-x-full',
         )}
       >
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-700">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
-                <Heart className="w-5 h-5 text-red-500" fill="currentColor" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-neutral-900 dark:text-white">
-                  {t('favorites.title')}
-                </h2>
-                <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                  {items.length} {t('favorites.items')}
-                </p>
-              </div>
+        <header className="flex items-center justify-between gap-4 border-b border-line p-4">
+          <div className="flex items-center gap-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-clay-100 text-clay-600 dark:bg-clay-900/40 dark:text-clay-300">
+              <Heart className="h-[18px] w-[18px]" fill="currentColor" />
+            </span>
+            <div>
+              <h2 className="font-semibold leading-tight">{t('favorites.title')}</h2>
+              <p className="text-sm text-subtle">
+                {items.length} {t('favorites.items')}
+              </p>
             </div>
-            <button
-              onClick={onClose}
-              className="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-            >
-              <X className="w-5 h-5 text-neutral-500" />
-            </button>
           </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={t('common.close')}
+            className="icon-btn h-10 w-10"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </header>
 
-          {/* Items */}
-          <div className="flex-1 overflow-y-auto p-4">
-            {items.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full text-center">
-                <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mb-4">
-                  <Heart className="w-10 h-10 text-neutral-400" />
-                </div>
-                <p className="text-neutral-600 dark:text-neutral-400 mb-4">
-                  {t('favorites.empty')}
-                </p>
-                <Link
-                  href="/houses"
-                  onClick={onClose}
-                  className="px-6 py-2.5 bg-primary-600 text-white rounded-xl font-medium hover:bg-primary-700 transition-colors"
-                >
-                  {t('nav.houses')}
-                </Link>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {items.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex gap-4 p-3 bg-neutral-50 dark:bg-neutral-800 rounded-xl"
-                  >
-                    <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-neutral-900 dark:text-white truncate">
-                        {item.name}
-                      </h3>
-                      <div className="flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400 mt-1">
-                        <MapPin className="w-3.5 h-3.5" />
-                        <span className="truncate">{item.location}</span>
-                      </div>
-                      <p className="text-primary-600 dark:text-primary-400 font-semibold mt-1">
-                        {formatPrice(item.price)}
-                      </p>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <button
-                        onClick={() => removeFromFavorites(item.id)}
-                        className="p-2 text-neutral-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
+        <div className="flex-1 overflow-y-auto p-4">
+          {items.length === 0 ? (
+            <div className="flex h-full flex-col items-center justify-center px-6 text-center">
+              <span className="mb-5 grid h-16 w-16 place-items-center rounded-full bg-sunken text-subtle">
+                <Heart className="h-7 w-7" />
+              </span>
+              <p className="mb-6 text-muted">{t('favorites.empty')}</p>
+              <Link href="/houses" onClick={onClose} className="btn btn-primary btn-sm">
+                {t('nav.houses')}
+              </Link>
+            </div>
+          ) : (
+            <ul className="space-y-3">
+              {items.map((item) => (
+                <li key={item.id} className="flex gap-3 rounded-2xl border border-line bg-sunken p-3">
+                  <span className="img-frame h-20 w-20 shrink-0 rounded-xl">
+                    <Image src={item.image} alt="" fill className="object-cover" sizes="80px" />
+                  </span>
+
+                  <div className="min-w-0 flex-1">
+                    <h3 className="truncate font-medium text-ink">{item.name}</h3>
+                    <p className="mt-1 flex items-center gap-1 text-sm text-subtle">
+                      <MapPin className="h-3.5 w-3.5 shrink-0" />
+                      <span className="truncate">{item.location}</span>
+                    </p>
+                    <p className="mt-1 font-semibold text-primary-700 dark:text-primary-300">
+                      {formatPrice(item.price)}
+                    </p>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
+
+                  <button
+                    type="button"
+                    onClick={() => removeFromFavorites(item.id)}
+                    aria-label={`${t('houseDetail.removeFromFavorites')} — ${item.name}`}
+                    className="icon-btn h-9 w-9 shrink-0 self-start hover:bg-clay-50 hover:text-clay-600 dark:hover:bg-clay-900/30 dark:hover:text-clay-300"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-      </div>
+      </aside>
     </>
   )
 }

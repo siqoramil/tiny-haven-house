@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useMemo } from 'react'
-import { LayoutGrid, List, SlidersHorizontal } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { LayoutGrid, Rows3, SearchX } from 'lucide-react'
 import { HouseCard } from '@/widgets/house-card'
 import {
   HouseFilters,
@@ -12,48 +12,39 @@ import type { HouseSummary } from '@/entities/house'
 import { cn } from '@/shared/lib'
 import { useLanguage } from '@/shared/i18n'
 
-
 interface HousesPageProps {
   houses: HouseSummary[]
   locations: string[]
 }
 
+type SortKey = 'newest' | 'price-asc' | 'price-desc' | 'size'
+
 export default function HousesPage({ houses, locations }: HousesPageProps) {
   const { t } = useLanguage()
   const [filters, setFilters] = useState<HouseFiltersState>(emptyHouseFilters)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const [sortBy, setSortBy] = useState<'newest' | 'price-asc' | 'price-desc' | 'size'>('newest')
+  const [sortBy, setSortBy] = useState<SortKey>('newest')
 
-  // Filter and sort houses
   const filteredHouses = useMemo(() => {
     const result = houses.filter((house) => {
-      // Search filter
       if (filters.search) {
-        const searchLower = filters.search.toLowerCase()
-        const matchesSearch =
-          house.title.toLowerCase().includes(searchLower) ||
-          house.location.city.toLowerCase().includes(searchLower) ||
-          house.location.state.toLowerCase().includes(searchLower) ||
-          house.features.some((f) => f.toLowerCase().includes(searchLower)) ||
-          house.propertyType.toLowerCase().includes(searchLower)
-        if (!matchesSearch) return false
+        const needle = filters.search.toLowerCase()
+        const matches =
+          house.title.toLowerCase().includes(needle) ||
+          house.location.city.toLowerCase().includes(needle) ||
+          house.location.state.toLowerCase().includes(needle) ||
+          house.features.some((feature) => feature.toLowerCase().includes(needle)) ||
+          house.propertyType.toLowerCase().includes(needle)
+        if (!matches) return false
       }
 
-      // Price filters
-      if (filters.priceMin && house.price < parseInt(filters.priceMin)) return false
-      if (filters.priceMax && house.price > parseInt(filters.priceMax)) return false
-
-      // Size filters
-      if (filters.sizeMin && house.size < parseInt(filters.sizeMin)) return false
-      if (filters.sizeMax && house.size > parseInt(filters.sizeMax)) return false
-
-      // Bedrooms filter
-      if (filters.bedrooms && house.bedrooms < parseInt(filters.bedrooms)) return false
-
-      // Property type filter
+      if (filters.priceMin && house.price < Number(filters.priceMin)) return false
+      if (filters.priceMax && house.price > Number(filters.priceMax)) return false
+      if (filters.sizeMin && house.size < Number(filters.sizeMin)) return false
+      if (filters.sizeMax && house.size > Number(filters.sizeMax)) return false
+      if (filters.bedrooms && house.bedrooms < Number(filters.bedrooms)) return false
       if (filters.propertyType && house.propertyType !== filters.propertyType) return false
 
-      // Location filter
       if (filters.location) {
         const fullLocation = `${house.location.city}, ${house.location.state}`
         if (fullLocation !== filters.location) return false
@@ -62,7 +53,6 @@ export default function HousesPage({ houses, locations }: HousesPageProps) {
       return true
     })
 
-    // Sort
     switch (sortBy) {
       case 'price-asc':
         result.sort((a, b) => a.price - b.price)
@@ -73,7 +63,6 @@ export default function HousesPage({ houses, locations }: HousesPageProps) {
       case 'size':
         result.sort((a, b) => b.size - a.size)
         break
-      case 'newest':
       default:
         result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     }
@@ -81,42 +70,38 @@ export default function HousesPage({ houses, locations }: HousesPageProps) {
     return result
   }, [houses, filters, sortBy])
 
+  const viewModes = [
+    { value: 'grid', icon: LayoutGrid, label: t('houses.view.grid') },
+    { value: 'list', icon: Rows3, label: t('houses.view.list') },
+  ] as const
+
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 pt-20">
-      {/* Page Header */}
-      <div className="bg-white dark:bg-neutral-800 border-b border-neutral-100 dark:border-neutral-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white mb-2">
-            {t('houses.title')}
-          </h1>
-          <p className="text-lg text-neutral-600 dark:text-neutral-400">
-            {t('houses.subtitle')}
+    <div className="pt-16 lg:pt-20">
+      <header className="border-b border-line bg-sunken">
+        <div className="shell py-12 lg:py-16">
+          <h1 className="font-display text-display-lg font-semibold">{t('houses.title')}</h1>
+          <p className="lede mt-3 max-w-2xl">{t('houses.subtitle')}</p>
+        </div>
+      </header>
+
+      <div className="shell py-10 lg:py-12">
+        <HouseFilters filters={filters} onFilterChange={setFilters} locations={locations} />
+
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-muted">
+            <span className="font-semibold text-ink">{filteredHouses.length}</span>{' '}
+            {t('houses.found')}
           </p>
-        </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Filters */}
-        <div className="mb-8">
-          <HouseFilters onFilterChange={setFilters} locations={locations} />
-        </div>
-
-        {/* Results Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-          <div className="flex items-center gap-2">
-            <SlidersHorizontal className="w-5 h-5 text-neutral-400" />
-            <span className="text-neutral-600 dark:text-neutral-400">
-              <span className="font-semibold text-neutral-900 dark:text-white">{filteredHouses.length}</span>
-              {' '}{t('houses.found')}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            {/* Sort Dropdown */}
+          <div className="flex items-center gap-3">
+            <label className="sr-only" htmlFor="sort">
+              {t('houses.filters.sortBy')}
+            </label>
             <select
+              id="sort"
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-              className="px-4 py-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 cursor-pointer"
+              onChange={(e) => setSortBy(e.target.value as SortKey)}
+              className="field-select w-auto py-2.5 text-sm"
             >
               <option value="newest">{t('houses.filters.newestFirst')}</option>
               <option value="price-asc">{t('houses.filters.priceLowHigh')}</option>
@@ -124,63 +109,59 @@ export default function HousesPage({ houses, locations }: HousesPageProps) {
               <option value="size">{t('houses.largestFirst')}</option>
             </select>
 
-            {/* View Toggle */}
-            <div className="flex items-center bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg p-1">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={cn(
-                  'p-2 rounded-md transition-colors',
-                  viewMode === 'grid'
-                    ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400'
-                    : 'text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300'
-                )}
-                aria-label="Grid view"
-              >
-                <LayoutGrid className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={cn(
-                  'p-2 rounded-md transition-colors',
-                  viewMode === 'list'
-                    ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400'
-                    : 'text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300'
-                )}
-                aria-label="List view"
-              >
-                <List className="w-5 h-5" />
-              </button>
+            <div
+              role="group"
+              aria-label={t('houses.view.label')}
+              className="flex items-center gap-1 rounded-xl border border-line bg-sunken p-1"
+            >
+              {viewModes.map((mode) => (
+                <button
+                  key={mode.value}
+                  type="button"
+                  onClick={() => setViewMode(mode.value)}
+                  aria-pressed={viewMode === mode.value}
+                  aria-label={mode.label}
+                  className={cn(
+                    'grid h-8 w-8 place-items-center rounded-lg transition-colors',
+                    viewMode === mode.value
+                      ? 'bg-surface text-primary-700 shadow-card dark:text-primary-300'
+                      : 'text-subtle hover:text-ink',
+                  )}
+                >
+                  <mode.icon className="h-4 w-4" />
+                </button>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Results Grid */}
         {filteredHouses.length > 0 ? (
           <div
             className={cn(
-              'grid gap-8',
-              viewMode === 'grid'
-                ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-                : 'grid-cols-1'
+              'mt-8 grid gap-6 lg:gap-8',
+              viewMode === 'grid' ? 'sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1',
             )}
           >
-            {filteredHouses.map((house) => (
-              <HouseCard key={house.id} house={house} />
+            {filteredHouses.map((house, index) => (
+              <HouseCard
+                key={house.id}
+                house={house}
+                layout={viewMode}
+                priority={index < 3}
+              />
             ))}
           </div>
         ) : (
-          /* Empty State */
-          <div className="text-center py-16">
-            <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-6">
-              <SlidersHorizontal className="w-10 h-10 text-neutral-400" />
-            </div>
-            <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">{t('houses.noResults')}</h3>
-            <p className="text-neutral-600 dark:text-neutral-400 mb-6 max-w-md mx-auto">
-              {t('houses.noResultsDesc')}
-            </p>
+          <div className="mt-8 rounded-3xl border border-dashed border-line px-6 py-20 text-center">
+            <span className="icon-tile mx-auto mb-6 h-16 w-16 bg-sunken text-subtle dark:bg-sunken">
+              <SearchX className="h-7 w-7" />
+            </span>
+            <h2 className="text-xl font-semibold">{t('houses.noResults')}</h2>
+            <p className="mx-auto mt-2 max-w-md text-muted">{t('houses.noResultsDesc')}</p>
             <button
+              type="button"
               onClick={() => setFilters(emptyHouseFilters)}
-              className="px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-colors"
+              className="btn btn-primary mt-7"
             >
               {t('houses.filters.clearAll')}
             </button>

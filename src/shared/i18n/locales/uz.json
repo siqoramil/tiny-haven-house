@@ -9,7 +9,8 @@
   "header": {
     "search": "Qidirish",
     "favorites": "Sevimlilar",
-    "language": "Til"
+    "language": "Til",
+    "menu": "Menyu"
   },
   "favorites": {
     "title": "Sevimlilar",
@@ -44,7 +45,11 @@
       "sortBy": "Saralash",
       "newestFirst": "Avval yangilari",
       "priceLowHigh": "Narx: pastdan yuqoriga",
-      "priceHighLow": "Narx: yuqoridan pastga"
+      "priceHighLow": "Narx: yuqoridan pastga",
+      "searchLocation": "Joyni qidirish…",
+      "noLocations": "Mos joy topilmadi",
+      "min": "Eng kam",
+      "max": "Eng ko'p"
     },
     "types": {
       "cabin": "Yog'och uy",
@@ -58,6 +63,11 @@
       "onePlus": "1+",
       "twoPlus": "2+",
       "threePlus": "3+"
+    },
+    "view": {
+      "label": "Ko'rinish",
+      "grid": "Katak ko'rinishi",
+      "list": "Ro'yxat ko'rinishi"
     }
   },
   "houseDetail": {
@@ -146,7 +156,9 @@
   },
   "testimonials": {
     "title": "Mijozlarimiz nima deydi",
-    "subtitle": "TinyHaven orqali o'z mukammal kichik uylarini topgan odamlarning haqiqiy hikoyalari."
+    "subtitle": "TinyHaven orqali o'z mukammal kichik uylarini topgan odamlarning haqiqiy hikoyalari.",
+    "previous": "Oldingi sharh",
+    "next": "Keyingi sharh"
   },
   "about": {
     "title": "TinyHaven haqida",
@@ -337,5 +349,10 @@
     "description": "Kechirasiz, siz qidirgan sahifani topa olmadik. U ko'chirilgan yoki endi mavjud emas bo'lishi mumkin.",
     "backHome": "Bosh sahifaga",
     "browse": "Uylarni ko'rish"
+  },
+  "gallery": {
+    "previous": "Oldingi rasm",
+    "next": "Keyingi rasm",
+    "viewFullSize": "To'liq hajmda ko'rish"
   }
 }

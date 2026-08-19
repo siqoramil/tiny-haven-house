@@ -1,40 +1,31 @@
 'use client'
 
+import { ArrowLeft, Compass, Search } from 'lucide-react'
 import { LocaleLink as Link, useLanguage } from '@/shared/i18n'
-import { Home, Search, ArrowLeft } from 'lucide-react'
 
 export default function NotFound() {
   const { t } = useLanguage()
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center px-4">
+    <div className="flex min-h-[70svh] items-center justify-center px-5 py-24 pt-32">
       <div className="text-center">
-        {/* Icon */}
-        <div className="w-24 h-24 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-8">
-          <Home className="w-12 h-12 text-primary-600" />
-        </div>
+        <span className="icon-tile mx-auto mb-8 h-20 w-20 rounded-4xl">
+          <Compass className="h-9 w-9" />
+        </span>
 
-        {/* Content */}
-        <h1 className="text-6xl font-display font-bold text-neutral-900 dark:text-white mb-4">404</h1>
-        <h2 className="text-2xl font-semibold text-neutral-700 dark:text-neutral-200 mb-4">{t('notFound.title')}</h2>
-        <p className="text-neutral-600 dark:text-neutral-400 max-w-md mx-auto mb-8">
-          {t('notFound.description')}
+        <p className="font-display text-display-xl font-semibold leading-none text-primary-700 dark:text-primary-300">
+          404
         </p>
+        <h1 className="mt-6 font-display text-display-sm font-semibold">{t('notFound.title')}</h1>
+        <p className="mx-auto mt-4 max-w-md text-muted">{t('notFound.description')}</p>
 
-        {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition-all"
-          >
-            <ArrowLeft className="w-5 h-5" />
+        <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+          <Link href="/" className="btn btn-primary">
+            <ArrowLeft className="h-4 w-4" />
             {t('notFound.backHome')}
           </Link>
-          <Link
-            href="/houses"
-            className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-xl font-semibold hover:border-neutral-400 hover:bg-white transition-all"
-          >
-            <Search className="w-5 h-5" />
+          <Link href="/houses" className="btn btn-secondary">
+            <Search className="h-4 w-4" />
             {t('notFound.browse')}
           </Link>
         </div>

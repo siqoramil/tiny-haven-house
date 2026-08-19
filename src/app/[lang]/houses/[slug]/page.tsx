@@ -29,13 +29,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'House Not Found' }
   }
 
+  const title = `${house.title} | TinyHaven`
+  const image = { url: house.images[0], width: 1200, height: 630, alt: house.title }
+
   return {
     title: house.title,
     description: house.shortDescription,
     openGraph: {
-      title: `${house.title} | TinyHaven`,
+      title,
       description: house.shortDescription,
-      images: [{ url: house.images[0], width: 1200, height: 630, alt: house.title }],
+      images: [image],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: house.shortDescription,
+      images: [image],
     },
   }
 }

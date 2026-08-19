@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useSyncExternalStore } from 'react'
 
 type Theme = 'light' | 'dark' | 'system'
 
@@ -36,62 +36,55 @@ interface ThemeProviderProps {
   children: React.ReactNode
 }
 
+const colorSchemeQuery = '(prefers-color-scheme: dark)'
+
+function subscribeToSystemTheme(onStoreChange: () => void) {
+  const mediaQuery = window.matchMedia(colorSchemeQuery)
+  mediaQuery.addEventListener('change', onStoreChange)
+  return () => mediaQuery.removeEventListener('change', onStoreChange)
+}
+
+function getSystemTheme(): 'light' | 'dark' {
+  return window.matchMedia(colorSchemeQuery).matches ? 'dark' : 'light'
+}
+
+function getServerTheme(): 'light' {
+  return 'light'
+}
+
+function subscribeToHydration() {
+  return () => {}
+}
+
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>('system')
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light')
-  const [mounted, setMounted] = useState(false)
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'system'
 
-  // Get system theme
-  const getSystemTheme = (): 'light' | 'dark' => {
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    }
-    return 'light'
-  }
-
-  // Initialize theme from localStorage
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme | null
-    if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
-      setTheme(savedTheme)
-    }
-    setMounted(true)
-  }, [])
+    const savedTheme = localStorage.getItem('theme')
+    return savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system'
+      ? savedTheme
+      : 'system'
+  })
+  const systemTheme = useSyncExternalStore(
+    subscribeToSystemTheme,
+    getSystemTheme,
+    getServerTheme,
+  )
+  const mounted = useSyncExternalStore(subscribeToHydration, () => true, () => false)
+  const resolvedTheme = theme === 'system' ? systemTheme : theme
 
   // Update resolved theme and apply to document
   useEffect(() => {
     if (!mounted) return
 
-    const resolved = theme === 'system' ? getSystemTheme() : theme
-    setResolvedTheme(resolved)
-
     // Apply theme to document
     const root = document.documentElement
     root.classList.remove('light', 'dark')
-    root.classList.add(resolved)
+    root.classList.add(resolvedTheme)
 
     // Save to localStorage
     localStorage.setItem('theme', theme)
-  }, [theme, mounted])
-
-  // Listen for system theme changes
-  useEffect(() => {
-    if (!mounted) return
-
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-
-    const handleChange = () => {
-      if (theme === 'system') {
-        const resolved = getSystemTheme()
-        setResolvedTheme(resolved)
-        document.documentElement.classList.remove('light', 'dark')
-        document.documentElement.classList.add(resolved)
-      }
-    }
-
-    mediaQuery.addEventListener('change', handleChange)
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [theme, mounted])
+  }, [theme, resolvedTheme, mounted])
 
   // Note: the correct theme class is already on <html> before first paint,
   // courtesy of the inline script in the root layout. There is nothing to hide

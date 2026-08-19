@@ -1,22 +1,28 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { LocaleLink as Link } from '@/shared/i18n'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Home, Heart } from 'lucide-react'
+import { Heart, Menu, X } from 'lucide-react'
 import { cn } from '@/shared/lib'
 import { ThemeToggle } from '@/features/theme'
 import { LanguageSwitcher } from '@/features/language-switch'
-import { FavoritesSidebar } from '@/features/favorites'
-import { useFavorites } from '@/features/favorites'
-import { stripLanguage, useLanguage } from '@/shared/i18n'
+import { FavoritesSidebar, useFavorites } from '@/features/favorites'
+import { LocaleLink as Link, stripLanguage, useLanguage } from '@/shared/i18n'
 
-const navLinkKeys = [
+const navLinks = [
   { labelKey: 'nav.home', href: '/' },
   { labelKey: 'nav.houses', href: '/houses' },
   { labelKey: 'nav.about', href: '/about' },
   { labelKey: 'nav.contact', href: '/contact' },
 ]
+
+/**
+ * Only the home page puts a full-bleed dark hero behind the header, so only
+ * there may the bar render transparent with white contents. The previous
+ * version listed the *light* routes instead, which meant every route missing
+ * from that list — house detail pages, 404 — drew white text on white.
+ */
+const routesWithHeroBehindHeader = ['/']
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -27,101 +33,97 @@ export default function Header() {
   const { totalItems: favoritesItems } = useFavorites()
   const { t } = useLanguage()
 
-  // Pages without dark hero should always use light header style
-  const pagesWithLightBackground = ['/houses', '/about', '/contact']
-  const useLightStyle = pagesWithLightBackground.includes(pathname) || isScrolled
+  const overHero = routesWithHeroBehindHeader.includes(pathname)
+  const onGlass = overHero && !isScrolled && !isMenuOpen
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => setIsScrolled(window.scrollY > 24)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMenuOpen(false)
-  }, [pathname])
 
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        useLightStyle
-          ? 'bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md shadow-sm dark:shadow-neutral-900/20'
-          : 'bg-transparent'
+        'fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,border-color] duration-300 ease-out',
+        onGlass
+          ? 'border-b border-transparent bg-transparent'
+          : 'border-b border-line bg-surface/85 backdrop-blur-xl',
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+      <div className="shell">
+        <div className="flex h-16 items-center justify-between gap-4 lg:h-20">
           {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 group"
-          >
-            <div className={cn(
-              'p-2 rounded-lg transition-colors',
-              useLightStyle ? 'bg-primary-600' : 'bg-white/20 backdrop-blur-sm'
-            )}>
-              <Home className={cn(
-                'w-5 h-5',
-                useLightStyle ? 'text-white' : 'text-white'
-              )} />
-            </div>
-            <span className={cn(
-              'text-xl font-display font-bold transition-colors',
-              useLightStyle ? 'text-neutral-900 dark:text-white' : 'text-white'
-            )}>
+          <Link href="/" className="group flex shrink-0 items-center gap-2.5">
+            <span
+              className={cn(
+                'grid h-9 w-9 place-items-center rounded-xl font-display text-lg font-semibold transition-colors',
+                onGlass
+                  ? 'bg-white/15 text-white ring-1 ring-inset ring-white/25 backdrop-blur-sm'
+                  : 'bg-primary-600 text-white dark:bg-primary-400 dark:text-primary-950',
+              )}
+              aria-hidden
+            >
+              t
+            </span>
+            <span
+              className={cn(
+                'font-display text-xl font-semibold tracking-tight transition-colors',
+                onGlass ? 'text-white' : 'text-ink',
+              )}
+            >
               TinyHaven
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {navLinkKeys.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  'px-4 py-2 rounded-lg text-sm font-medium transition-all',
-                  pathname === link.href
-                    ? useLightStyle
-                      ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
-                      : 'bg-white/20 text-white'
-                    : useLightStyle
-                      ? 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800'
-                      : 'text-white/80 hover:text-white hover:bg-white/10'
-                )}
-              >
-                {t(link.labelKey)}
-              </Link>
-            ))}
+          {/* Desktop navigation */}
+          <nav className="hidden items-center gap-1 lg:flex">
+            {navLinks.map((link) => {
+              const active = pathname === link.href
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={active ? 'page' : undefined}
+                  className={cn(
+                    'rounded-full px-4 py-2 text-sm font-medium transition-colors',
+                    onGlass
+                      ? active
+                        ? 'bg-white/20 text-white'
+                        : 'text-white/75 hover:bg-white/10 hover:text-white'
+                      : active
+                        ? 'bg-primary-50 text-primary-800 dark:bg-primary-900/50 dark:text-primary-200'
+                        : 'text-muted hover:bg-sunken hover:text-ink',
+                  )}
+                >
+                  {t(link.labelKey)}
+                </Link>
+              )
+            })}
           </nav>
 
-          {/* Actions - Desktop */}
-          <div className="hidden lg:flex items-center gap-2">
-            <LanguageSwitcher useLightStyle={useLightStyle} />
-            <ThemeToggle useLightStyle={useLightStyle} />
+          {/* Actions */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <div className="hidden sm:block">
+              <LanguageSwitcher onGlass={onGlass} />
+            </div>
+            <ThemeToggle onGlass={onGlass} />
 
-            {/* Favorites Button */}
             <button
+              type="button"
               onClick={() => setIsFavoritesOpen(true)}
               className={cn(
-                "relative p-2.5 rounded-xl transition-colors",
-                useLightStyle
-                  ? "bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700"
-                  : "bg-white/20 backdrop-blur-sm hover:bg-white/30"
+                'relative grid h-10 w-10 place-items-center rounded-xl transition-colors',
+                onGlass
+                  ? 'bg-white/15 text-white ring-1 ring-inset ring-white/20 backdrop-blur-sm hover:bg-white/25'
+                  : 'bg-sunken text-muted hover:bg-line hover:text-ink',
               )}
               aria-label={t('header.favorites')}
             >
-              <Heart className={cn(
-                "w-5 h-5",
-                useLightStyle ? "text-neutral-600 dark:text-neutral-300" : "text-white"
-              )} />
+              <Heart className="h-[18px] w-[18px]" />
               {favoritesItems > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                <span className="absolute -right-1 -top-1 grid h-5 min-w-[1.25rem] place-items-center rounded-full bg-clay-500 px-1 text-[10px] font-bold text-white ring-2 ring-surface">
                   {favoritesItems}
                 </span>
               )}
@@ -129,99 +131,72 @@ export default function Header() {
 
             <Link
               href="/houses"
-              className={cn(
-                'px-5 py-2.5 rounded-lg text-sm font-semibold transition-all',
-                useLightStyle
-                  ? 'bg-primary-600 text-white hover:bg-primary-700'
-                  : 'bg-white text-neutral-900 hover:bg-neutral-100'
-              )}
+              className={cn('btn btn-sm hidden lg:inline-flex', onGlass ? 'btn-invert' : 'btn-primary')}
             >
               {t('nav.findHome')}
             </Link>
-          </div>
-
-          {/* Actions - Mobile */}
-          <div className="lg:hidden flex items-center gap-1">
-            {/* Favorites Button */}
-            <button
-              onClick={() => setIsFavoritesOpen(true)}
-              className={cn(
-                "relative p-2 rounded-lg transition-colors",
-                useLightStyle
-                  ? "hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                  : "hover:bg-white/10"
-              )}
-              aria-label={t('header.favorites')}
-            >
-              <Heart className={cn(
-                'w-5 h-5',
-                useLightStyle ? 'text-neutral-600 dark:text-neutral-300' : 'text-white'
-              )} />
-              {favoritesItems > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-                  {favoritesItems}
-                </span>
-              )}
-            </button>
-
-
-            <ThemeToggle useLightStyle={useLightStyle} />
 
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              type="button"
+              onClick={() => setIsMenuOpen((open) => !open)}
               className={cn(
-                'p-2 rounded-lg transition-colors',
-                useLightStyle
-                  ? 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
-                  : 'text-white hover:bg-white/10'
+                'grid h-10 w-10 place-items-center rounded-xl transition-colors lg:hidden',
+                onGlass
+                  ? 'bg-white/15 text-white ring-1 ring-inset ring-white/20 backdrop-blur-sm'
+                  : 'bg-sunken text-muted hover:text-ink',
               )}
-              aria-label="Toggle menu"
+              aria-label={t('header.menu')}
+              aria-expanded={isMenuOpen}
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <div
         className={cn(
-          'lg:hidden absolute top-full left-0 right-0 bg-white dark:bg-neutral-900 shadow-lg dark:shadow-neutral-900/50 transition-all duration-300 overflow-hidden',
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          'overflow-hidden border-t border-line bg-surface transition-[max-height,opacity] duration-300 ease-out lg:hidden',
+          isMenuOpen ? 'max-h-[26rem] opacity-100' : 'max-h-0 border-transparent opacity-0',
         )}
       >
-        <nav className="px-4 py-4 space-y-1">
-          {navLinkKeys.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                'block px-4 py-3 rounded-lg text-base font-medium transition-colors',
-                pathname === link.href
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400'
-                  : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800'
-              )}
-            >
-              {t(link.labelKey)}
-            </Link>
-          ))}
-          <div className="pt-2">
-            <Link
-              href="/houses"
-              className="block w-full px-4 py-3 bg-primary-600 text-white text-center rounded-lg font-semibold hover:bg-primary-700 transition-colors"
-            >
-              {t('nav.findHome')}
-            </Link>
-          </div>
+        <nav className="shell space-y-1 py-4">
+          {navLinks.map((link) => {
+            const active = pathname === link.href
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsMenuOpen(false)}
+                aria-current={active ? 'page' : undefined}
+                className={cn(
+                  'block rounded-xl px-4 py-3 text-base font-medium transition-colors',
+                  active
+                    ? 'bg-primary-50 text-primary-800 dark:bg-primary-900/50 dark:text-primary-200'
+                    : 'text-muted hover:bg-sunken hover:text-ink',
+                )}
+              >
+                {t(link.labelKey)}
+              </Link>
+            )
+          })}
 
-          {/* Language Switcher in Mobile Menu */}
-          <div className="pt-4 border-t border-neutral-200 dark:border-neutral-700 mt-2">
+          <Link
+            href="/houses"
+            onClick={() => setIsMenuOpen(false)}
+            className="btn btn-primary mt-3 w-full"
+          >
+            {t('nav.findHome')}
+          </Link>
+
+          <div className="flex items-center justify-between border-t border-line pt-4">
+            <span className="text-sm text-subtle">{t('header.language')}</span>
             <LanguageSwitcher />
           </div>
         </nav>
       </div>
 
-      {/* Sidebars */}
       <FavoritesSidebar isOpen={isFavoritesOpen} onClose={() => setIsFavoritesOpen(false)} />
     </header>
   )

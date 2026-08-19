@@ -11,115 +11,103 @@ export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const { t } = useLanguage()
 
-  const goToPrevious = () => {
+  const goToPrevious = () =>
     setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))
-  }
-
-  const goToNext = () => {
+  const goToNext = () =>
     setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))
-  }
 
-  const currentTestimonial = testimonials[currentIndex]
+  const current = testimonials[currentIndex]
 
   return (
-    <section className="py-20 lg:py-32 bg-neutral-50 dark:bg-neutral-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl lg:text-4xl font-display font-bold text-neutral-900 dark:text-white mb-4">
-            {t('testimonials.title')}
-          </h2>
-          <p className="text-lg text-neutral-600 dark:text-neutral-400">
-            {t('testimonials.subtitle')}
-          </p>
+    <section className="section bg-primary-50 dark:bg-stone-900">
+      <div className="shell">
+        <div className="mx-auto mb-12 max-w-2xl text-center">
+          <h2 className="font-display text-display-md font-semibold">{t('testimonials.title')}</h2>
+          <p className="lede mt-4">{t('testimonials.subtitle')}</p>
         </div>
 
-        {/* Testimonial Carousel */}
-        <div className="relative max-w-4xl mx-auto">
-          {/* Quote Icon */}
-          <div className="absolute -top-8 left-1/2 -translate-x-1/2 p-4 bg-primary-100 dark:bg-primary-900/50 rounded-full">
-            <Quote className="w-8 h-8 text-primary-600 dark:text-primary-400" />
-          </div>
-
-          {/* Card */}
-          <div className="bg-white dark:bg-neutral-900 rounded-3xl shadow-sm p-8 lg:p-12 pt-12">
-            <div className="flex flex-col items-center text-center">
-              {/* Rating */}
-              <div className="flex items-center gap-1 mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={cn(
-                      'w-5 h-5',
-                      i < currentTestimonial.rating
-                        ? 'text-yellow-400 fill-yellow-400'
-                        : 'text-neutral-300 dark:text-neutral-600'
-                    )}
-                  />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <blockquote className="text-xl lg:text-2xl text-neutral-700 dark:text-neutral-300 leading-relaxed mb-8 max-w-2xl">
-                &ldquo;{currentTestimonial.quote}&rdquo;
-              </blockquote>
-
-              {/* Author */}
-              <div className="flex items-center gap-4">
-                <div className="relative w-16 h-16 rounded-full overflow-hidden ring-4 ring-primary-100 dark:ring-primary-900/50">
-                  <Image
-                    src={currentTestimonial.image}
-                    alt={currentTestimonial.name}
-                    fill
-                    className="object-cover"
-                    sizes="64px"
-                  />
-                </div>
-                <div className="text-left">
-                  <p className="font-semibold text-neutral-900 dark:text-white">
-                    {currentTestimonial.name}
-                  </p>
-                  <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                    {currentTestimonial.location}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <button
-              onClick={goToPrevious}
-              className="p-3 bg-white dark:bg-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all"
-              aria-label="Previous testimonial"
+        <div className="mx-auto max-w-3xl">
+          <figure className="card relative px-6 pb-8 pt-12 text-center sm:px-12 sm:pb-10 sm:pt-14">
+            <span
+              className="absolute -top-6 left-1/2 grid h-12 w-12 -translate-x-1/2 place-items-center rounded-full bg-primary-600 text-white shadow-card dark:bg-primary-400 dark:text-primary-950"
+              aria-hidden
             >
-              <ChevronLeft className="w-5 h-5 text-neutral-600 dark:text-neutral-400" />
+              <Quote className="h-5 w-5" fill="currentColor" />
+            </span>
+
+            <div
+              className="mb-6 flex items-center justify-center gap-1"
+              aria-label={`${current.rating} / 5`}
+            >
+              {Array.from({ length: 5 }, (_, i) => (
+                <Star
+                  key={i}
+                  aria-hidden
+                  className={cn(
+                    'h-4 w-4',
+                    i < current.rating ? 'fill-clay-400 text-clay-400' : 'text-stone-300 dark:text-stone-700',
+                  )}
+                />
+              ))}
+            </div>
+
+            {/* Fixed min-height stops the card from jumping between quotes. */}
+            <blockquote className="min-h-[8rem] font-display text-xl leading-relaxed text-ink sm:min-h-[7rem] sm:text-2xl">
+              &ldquo;{current.quote}&rdquo;
+            </blockquote>
+
+            <figcaption className="mt-8 flex items-center justify-center gap-3.5">
+              <span className="img-frame h-14 w-14 rounded-full ring-2 ring-primary-200 ring-offset-2 ring-offset-surface dark:ring-primary-800">
+                <Image
+                  src={current.image}
+                  alt=""
+                  fill
+                  className="object-cover"
+                  sizes="56px"
+                />
+              </span>
+              <span className="text-left">
+                <span className="block font-semibold text-ink">{current.name}</span>
+                <span className="block text-sm text-subtle">{current.location}</span>
+              </span>
+            </figcaption>
+          </figure>
+
+          <div className="mt-8 flex items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={goToPrevious}
+              className="icon-btn h-11 w-11 border border-line bg-surface hover:bg-sunken"
+              aria-label={t('testimonials.previous')}
+            >
+              <ChevronLeft className="h-5 w-5" />
             </button>
 
-            {/* Dots */}
             <div className="flex items-center gap-2">
-              {testimonials.map((_, index) => (
+              {testimonials.map((testimonial, index) => (
                 <button
-                  key={index}
+                  key={testimonial.id}
+                  type="button"
                   onClick={() => setCurrentIndex(index)}
+                  aria-label={testimonial.name}
+                  aria-current={index === currentIndex}
                   className={cn(
-                    'w-2.5 h-2.5 rounded-full transition-all',
+                    'h-2.5 rounded-full transition-all duration-300 ease-out',
                     index === currentIndex
-                      ? 'bg-primary-600 w-8'
-                      : 'bg-neutral-300 dark:bg-neutral-600 hover:bg-neutral-400 dark:hover:bg-neutral-500'
+                      ? 'w-8 bg-primary-600 dark:bg-primary-400'
+                      : 'w-2.5 bg-stone-300 hover:bg-stone-400 dark:bg-stone-700 dark:hover:bg-stone-600',
                   )}
-                  aria-label={`Go to testimonial ${index + 1}`}
                 />
               ))}
             </div>
 
             <button
+              type="button"
               onClick={goToNext}
-              className="p-3 bg-white dark:bg-neutral-900 rounded-full shadow-sm hover:shadow-md transition-all"
-              aria-label="Next testimonial"
+              className="icon-btn h-11 w-11 border border-line bg-surface hover:bg-sunken"
+              aria-label={t('testimonials.next')}
             >
-              <ChevronRight className="w-5 h-5 text-neutral-600 dark:text-neutral-400" />
+              <ChevronRight className="h-5 w-5" />
             </button>
           </div>
         </div>
